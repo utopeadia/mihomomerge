@@ -26,6 +26,13 @@ function main(config, profileName) {
     updateDNSVersionProxyGroup(config, "🛬 美国落地", "ipv4-prefer")
     updateDNSVersionProxyGroup(config, "🛬 日本落地", "ipv4-prefer")
     updateDNSVersionProxyGroup(config, "🛬 香港落地", "ipv4-prefer")
+    // 传入参数：config，需要添加dialer的节点组，指定为dialer-proxy的节点组，需要替换relay的节点组
+    // 后面的配置会替代前面的配置
+    updateDialerProxyGroup(config, "🛬 新加坡落地", "🇸🇬 新加坡节点", "🇸🇬 新加坡自建落地");
+    updateDialerProxyGroup(config, "🛬 美国落地", "🇺🇲 美国节点", "🇺🇲 美国自建落地");
+    updateDialerProxyGroup(config, "🛬 日本落地", "🇯🇵 日本节点", "🇯🇵 日本自建落地");
+    updateDialerProxyGroup(config, "🛬 香港落地", "🇭🇰 香港节点", "🇭🇰 香港自建落地");
+    // 传入参数：config，需要修改的正则表达式，指定为dialer-proxy的节点组
     // 后面的配置会替代前面的配置
     updateDialerProxy(config, /日本SS-/, "🇯🇵 日本节点");
     updateDialerProxy(config, /香港SS-/, "🇭🇰 香港节点");
@@ -34,6 +41,12 @@ function main(config, profileName) {
 
     // 修改type为load-balance/fallback/url-test的订阅组lazy为false或true
     updateLazyOption(config, false);
+    // // 修改type为load-balance/fallback/url-test/select的订阅组disableudp为false或true
+    // updateDisableUdpOption(config, false);
+    // 修改type为 load-balance的订阅组strategy为consistent-hashing或round-robin
+    updateStrategyOption(config, "round-robin");
+    // 修改type为"vmess", "vless", "trojan", "ss", "ssr", "tuic"的节udp-over-tcp为为false或true，udp-over-tcp-version版本为2
+    updateTcpOverUdpOption(config, true);
 
     // 正则为规则组添加特定节点
     addProxiesToRegexGroup(config, /Stream/, "DIRECT");
