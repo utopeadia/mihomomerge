@@ -55,9 +55,10 @@ function main(config, profileName) {
     // 传入参数：config，添加的规则，添加位置：push（添加到除final外最后）/unshift（添加到最高优先级）
     addRules(config, "AND,((NETWORK,UDP),(DST-PORT,443),(GEOSITE,youtube)),REJECT", "unshift");
 
-    // 删除指定类型的节点
-    // 传入参数：config，需要删除的节点类型
-    removeProxiesByType(config, "vless");
+    // 删除指定属性的节点
+    // 传入参数：config，属性，属性值
+    removeProxiesByProperty(config, "type", "vless");
+
 
     return config;
 }
@@ -182,10 +183,10 @@ function addRules(config, newrule, position) {
     }
 }
 
-function removeProxiesByType(config, type) {
+function removeProxiesByProperty(config, property, value) {
     const removedProxyNames = [];
     config.proxies = config.proxies.filter(proxy => {
-        if (proxy.type === type) {
+        if (proxy[property] === value) {
             removedProxyNames.push(proxy.name);
             return false;
         }
