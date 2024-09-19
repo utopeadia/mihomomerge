@@ -178,10 +178,10 @@ function addRules(config, newrule, position) {
     }
 }
 
-function removeProxiesByType(config, type) {
+function removeProxiesByProperty(config, property, value) {
     const removedProxyNames = [];
     config.proxies = config.proxies.filter(proxy => {
-        if (proxy.type === type) {
+        if (proxy[property] === value) {
             removedProxyNames.push(proxy.name);
             return false;
         }
