@@ -154,7 +154,7 @@ function addRules(config, newrule, position) {
     }
 }
 
-// 删除节点
+// 删除指定属性节点
 // 传入参数：config, property(属性), value(值)
 function removeProxiesByProperty(config, property, value) {
     const removedProxyNames = [];
