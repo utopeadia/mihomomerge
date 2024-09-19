@@ -172,8 +172,22 @@ function addProxiesToRegexGroup(config, regex, newProxies) {
 
 function addRules(config, newrule, position) {
     if (position === "push") {
-        config["rules"].splice(-1, 0, newrule); 
+        config["rules"].splice(-1, 0, newrule);
     } else {
         config["rules"].unshift(newrule);
     }
+}
+
+function removeProxiesByType(config, type) {
+    const removedProxyNames = [];
+    config.proxies = config.proxies.filter(proxy => {
+        if (proxy.type === type) {
+            removedProxyNames.push(proxy.name);
+            return false;
+        }
+        return true;
+    });
+    config["proxy-groups"].forEach(group => {
+        group.proxies = group.proxies.filter(proxyName => !removedProxyNames.includes(proxyName));
+    });
 }
