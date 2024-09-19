@@ -42,7 +42,7 @@ function main(config, profileName) {
     // 修改type为load-balance/fallback/url-test的订阅组lazy为false或true
     updateLazyOption(config, false);
     // 修改type为load-balance/fallback/url-test/select的订阅组disableudp为false或true
-    updateDisableUdpOption(config, false);
+    // updateDisableUdpOption(config, false);
     // 修改type为 load-balance的订阅组strategy为consistent-hashing或round-robin
     updateStrategyOption(config, "round-robin");
     // 修改type为"vmess", "vless", "trojan", "ss", "ssr", "tuic"的节udp-over-tcp为为false或true，udp-over-tcp-version版本为2
