@@ -89,19 +89,7 @@ function updateDialerProxyGroup(config, groupMappings) {
 // 传入参数：config, searchBy, targetGroups, optionName, optionValue
 function updateGroupOption(config, searchBy, targetGroups, optionName, optionValue) {
     config["proxy-groups"].forEach(group => {
-        if (Array.isArray(targetGroups)) {
-            for (const targetGroup of targetGroups) {
-                if (targetGroup instanceof RegExp && targetGroup.test(group[searchBy])) {
-                    group[optionName] = optionValue;
-                    break;
-                } else if (group[searchBy] === targetGroup) {
-                    group[optionName] = optionValue;
-                    break;
-                }
-            }
-        } else if (targetGroups instanceof RegExp && targetGroups.test(group[searchBy])) {
-            group[optionName] = optionValue;
-        } else if (group[searchBy] === targetGroups) {
+        if (targetGroups.includes(group[searchBy])) {
             group[optionName] = optionValue;
         }
     });
@@ -134,34 +122,7 @@ function updateProxyOption(config, searchBy, targetProxies, optionName, optionVa
 // 传入参数：config, searchBy, targetGroups, optionName, optionValue
 function updateProxyOptionByGroup(config, searchBy, targetGroups, optionName, optionValue) {
     config["proxy-groups"].forEach(group => {
-        if (Array.isArray(targetGroups)) {
-            for (const targetGroup of targetGroups) {
-                if (targetGroup instanceof RegExp && targetGroup.test(group[searchBy])) {
-                    group.proxies.forEach(proxyName => {
-                        const proxy = (config.proxies || []).find(p => p.name === proxyName);
-                        if (proxy) {
-                            proxy[optionName] = optionValue;
-                        }
-                    });
-                    break;
-                } else if (group[searchBy] === targetGroup) {
-                    group.proxies.forEach(proxyName => {
-                        const proxy = (config.proxies || []).find(p => p.name === proxyName);
-                        if (proxy) {
-                            proxy[optionName] = optionValue;
-                        }
-                    });
-                    break;
-                }
-            }
-        } else if (targetGroups instanceof RegExp && targetGroups.test(group[searchBy])) {
-            group.proxies.forEach(proxyName => {
-                const proxy = (config.proxies || []).find(p => p.name === proxyName);
-                if (proxy) {
-                    proxy[optionName] = optionValue;
-                }
-            });
-        } else if (group[searchBy] === targetGroups) {
+        if (targetGroups.includes(group[searchBy])) {
             group.proxies.forEach(proxyName => {
                 const proxy = (config.proxies || []).find(p => p.name === proxyName);
                 if (proxy) {
