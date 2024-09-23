@@ -243,28 +243,14 @@ function sortRulesWithinGroups(config) {
 
     function getRuleGroup(rule) {
         const parts = rule.split(',');
-
-        if (parts.length < 2) {
-            return rule;
+        if (parts[parts.length - 1] === 'no-resolve') {
+            return parts[parts.length - 2];
         }
-
-        for (let i = parts.length - 1; i >= 1; i--) {
-            const part = parts[i].trim();
-
-            if (['no-resolve', 'DIRECT', 'REJECT', 'PROXY'].includes(part)) {
-                continue;
-            }
-
-            if (/^[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F1E0}-\u{1F1FF}]/.test(part) ||
-                /^[🌍🌎🌏🌐🏠🏡🏢🏣🏤🏥🏦🏨🏩🏪🏫🏬🏭🏯🏰💻📱🖥️🖨️]/.test(part) ||
-                /^[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>?]/.test(part)) {
-                return part;
-            }
-
-            return part;
+        if (parts[0].startsWith('PROCESS') && parts[parts.length - 1] === 'DIRECT') {
+            return parts[parts.length - 2];
         }
-
-        return parts[parts.length - 1].trim();
+        // For other rules
+        return parts[parts.length - 1];
     }
 
     let sortedRules = [];
@@ -287,7 +273,6 @@ function sortRulesWithinGroups(config) {
         }
     }
 
-    // Handle the last group
     if (currentGroup.length > 0) {
         currentGroup.sort(compareRules);
         sortedRules = sortedRules.concat(currentGroup);
