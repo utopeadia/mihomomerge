@@ -241,13 +241,18 @@ function sortRulesWithinGroups(config) {
         return (ruleTypeOrder[categoryA] || 3) - (ruleTypeOrder[categoryB] || 3);
     }
 
+    function getRuleTarget(rule) {
+        const parts = rule.split(',');
+        return parts[parts.length - 2] === 'no-resolve' ? parts[parts.length - 3] : parts[parts.length - 2];
+    }
+
     let sortedRules = [];
     let currentGroup = [];
     let currentGroupTarget = null;
 
     for (let i = 0; i < config.rules.length; i++) {
         const rule = config.rules[i];
-        const ruleTarget = rule.split(',').pop();
+        const ruleTarget = getRuleTarget(rule);
 
         if (ruleTarget === currentGroupTarget) {
             currentGroup.push(rule);
@@ -261,6 +266,7 @@ function sortRulesWithinGroups(config) {
         }
     }
 
+    // Handle the last group
     if (currentGroup.length > 0) {
         currentGroup.sort(compareRules);
         sortedRules = sortedRules.concat(currentGroup);
