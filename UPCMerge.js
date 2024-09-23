@@ -36,6 +36,9 @@ function main(config, profileName) {
     // 添加规则
     addRules(config, "AND,((NETWORK,UDP),(DST-PORT,443),(GEOSITE,youtube)),REJECT", "unshift");
 
+    // 分组排序
+    sortRulesWithinGroups(config)
+
     return config;
 }
 
