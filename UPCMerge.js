@@ -214,3 +214,55 @@ function removeProxiesByProperty(config, property, value) {
         group.proxies = group.proxies.filter(proxyName => !removedProxyNames.includes(proxyName));
     });
 }
+
+// 对规则进行排序
+// 传入参数：config
+function sortRulesWithinGroups(config) {
+    const ruleTypeOrder = {
+        'PROCESS': 0,
+        'DOMAIN': 1,
+        'IP': 2
+    };
+
+    function getRuleTypeCategory(rule) {
+        const ruleType = rule.split(',')[0];
+        if (ruleType.startsWith('PROCESS')) return 'PROCESS';
+        if (ruleType.startsWith('DOMAIN')) return 'DOMAIN';
+        if (ruleType.startsWith('IP')) return 'IP';
+        return 'OTHER';
+    }
+
+    function compareRules(a, b) {
+        const categoryA = getRuleTypeCategory(a);
+        const categoryB = getRuleTypeCategory(b);
+        return (ruleTypeOrder[categoryA] || 3) - (ruleTypeOrder[categoryB] || 3);
+    }
+
+    let sortedRules = [];
+    let currentGroup = [];
+    let currentGroupTarget = null;
+
+    for (let i = 0; i < config.rules.length; i++) {
+        const rule = config.rules[i];
+        const ruleTarget = rule.split(',').pop();
+
+        if (ruleTarget === currentGroupTarget) {
+            currentGroup.push(rule);
+        } else {
+            if (currentGroup.length > 0) {
+                currentGroup.sort(compareRules);
+                sortedRules = sortedRules.concat(currentGroup);
+            }
+            currentGroup = [rule];
+            currentGroupTarget = ruleTarget;
+        }
+    }
+
+    if (currentGroup.length > 0) {
+        currentGroup.sort(compareRules);
+        sortedRules = sortedRules.concat(currentGroup);
+    }
+
+    config.rules = sortedRules;
+    return config;
+}
