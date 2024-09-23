@@ -39,6 +39,9 @@ function main(config, profileName) {
     // 删除vless节点
     removeProxiesByProperty(config, "type", "vless");
 
+    // 分组排序
+    sortRulesWithinGroups(config)
+
     return config;
 }
 
@@ -216,4 +219,69 @@ function removeProxiesByProperty(config, property, value) {
     config["proxy-groups"].forEach(group => {
         group.proxies = group.proxies.filter(proxyName => !removedProxyNames.includes(proxyName));
     });
+}
+
+// 对规则进行排序
+// 传入参数：config
+function sortRulesWithinGroups(config) {
+    const ruleTypeOrder = {
+        'PROCESS': 0,
+        'DOMAIN': 1,
+        'IP': 2
+    };
+
+    function getRuleTypeCategory(rule) {
+        const ruleType = rule.split(',')[0];
+        if (ruleType.startsWith('PROCESS')) return 'PROCESS';
+        if (ruleType.startsWith('DOMAIN') || ruleType === 'GEOSITE') return 'DOMAIN';
+        if (ruleType.startsWith('IP') || ruleType === 'GEOIP') return 'IP';
+        return 'OTHER';
+    }
+
+    function compareRules(a, b) {
+        const categoryA = getRuleTypeCategory(a);
+        const categoryB = getRuleTypeCategory(b);
+        const orderA = ruleTypeOrder[categoryA] !== undefined ? ruleTypeOrder[categoryA] : 3;
+        const orderB = ruleTypeOrder[categoryB] !== undefined ? ruleTypeOrder[categoryB] : 3;
+        return orderA - orderB;
+    }
+
+    function getRuleGroup(rule) {
+        const parts = rule.split(',');
+        const lastPart = parts[parts.length - 1];
+        const secondLastPart = parts[parts.length - 2];
+
+        if (lastPart === 'no-resolve' || lastPart === 'DIRECT') {
+            return secondLastPart;
+        }
+        return lastPart;
+    }
+
+    let sortedRules = [];
+    let currentGroup = [];
+    let currentGroupTarget = null;
+
+    for (let i = 0; i < config.rules.length; i++) {
+        const rule = config.rules[i];
+        const ruleTarget = getRuleGroup(rule);
+
+        if (ruleTarget === currentGroupTarget) {
+            currentGroup.push(rule);
+        } else {
+            if (currentGroup.length > 0) {
+                currentGroup.sort(compareRules);
+                sortedRules = sortedRules.concat(currentGroup);
+            }
+            currentGroup = [rule];
+            currentGroupTarget = ruleTarget;
+        }
+    }
+
+    if (currentGroup.length > 0) {
+        currentGroup.sort(compareRules);
+        sortedRules = sortedRules.concat(currentGroup);
+    }
+
+    config.rules = sortedRules;
+    return config;
 }
