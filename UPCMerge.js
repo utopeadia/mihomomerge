@@ -230,34 +230,33 @@ function sortRulesWithinGroups(config) {
     function getRuleTypeCategory(rule) {
         const ruleType = rule.split(',')[0];
         if (ruleType.startsWith('PROCESS')) return 'PROCESS';
-        if (ruleType.startsWith('DOMAIN')) return 'DOMAIN';
-        if (ruleType.startsWith('IP')) return 'IP';
+        if (ruleType.startsWith('DOMAIN') || ruleType === 'GEOSITE') return 'DOMAIN';
+        if (ruleType.startsWith('IP') || ruleType === 'GEOIP') return 'IP';
         return 'OTHER';
     }
 
     function compareRules(a, b) {
         const categoryA = getRuleTypeCategory(a);
         const categoryB = getRuleTypeCategory(b);
-        return (ruleTypeOrder[categoryA] || 3) - (ruleTypeOrder[categoryB] || 3);
+        return (ruleTypeOrder[categoryA] ?? 3) - (ruleTypeOrder[categoryB] ?? 3);
     }
 
     function getRuleGroup(rule) {
         const parts = rule.split(',');
-        if (parts[0].startsWith('IP') && parts[parts.length - 1] === 'no-resolve') {
-            return parts[parts.length - 2];
+        const lastPart = parts[parts.length - 1];
+        const secondLastPart = parts[parts.length - 2];
+
+        if (lastPart === 'no-resolve' || lastPart === 'DIRECT') {
+            return secondLastPart;
         }
-        if (parts[0].startsWith('PROCESS') && parts[parts.length - 1] === 'DIRECT') {
-            return parts[parts.length - 2];
-        }
-        return parts[parts.length - 1];
+        return lastPart;
     }
 
     let sortedRules = [];
     let currentGroup = [];
     let currentGroupTarget = null;
 
-    for (let i = 0; i < config.rules.length; i++) {
-        const rule = config.rules[i];
+    for (const rule of config.rules) {
         const ruleTarget = getRuleGroup(rule);
 
         if (ruleTarget === currentGroupTarget) {
