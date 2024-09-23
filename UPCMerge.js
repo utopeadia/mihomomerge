@@ -238,7 +238,9 @@ function sortRulesWithinGroups(config) {
     function compareRules(a, b) {
         const categoryA = getRuleTypeCategory(a);
         const categoryB = getRuleTypeCategory(b);
-        return (ruleTypeOrder[categoryA] ?? 3) - (ruleTypeOrder[categoryB] ?? 3);
+        const orderA = ruleTypeOrder[categoryA] !== undefined ? ruleTypeOrder[categoryA] : 3;
+        const orderB = ruleTypeOrder[categoryB] !== undefined ? ruleTypeOrder[categoryB] : 3;
+        return orderA - orderB;
     }
 
     function getRuleGroup(rule) {
@@ -256,7 +258,8 @@ function sortRulesWithinGroups(config) {
     let currentGroup = [];
     let currentGroupTarget = null;
 
-    for (const rule of config.rules) {
+    for (let i = 0; i < config.rules.length; i++) {
+        const rule = config.rules[i];
         const ruleTarget = getRuleGroup(rule);
 
         if (ruleTarget === currentGroupTarget) {
