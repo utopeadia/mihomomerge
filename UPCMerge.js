@@ -243,13 +243,12 @@ function sortRulesWithinGroups(config) {
 
     function getRuleGroup(rule) {
         const parts = rule.split(',');
-        if (parts[parts.length - 1] === 'no-resolve') {
+        if (parts[0].startsWith('IP') && parts[parts.length - 1] === 'no-resolve') {
             return parts[parts.length - 2];
         }
         if (parts[0].startsWith('PROCESS') && parts[parts.length - 1] === 'DIRECT') {
             return parts[parts.length - 2];
         }
-        // For other rules
         return parts[parts.length - 1];
     }
 
