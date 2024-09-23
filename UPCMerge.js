@@ -241,9 +241,30 @@ function sortRulesWithinGroups(config) {
         return (ruleTypeOrder[categoryA] || 3) - (ruleTypeOrder[categoryB] || 3);
     }
 
-    function getRuleTarget(rule) {
+    function getRuleGroup(rule) {
         const parts = rule.split(',');
-        return parts[parts.length - 2] === 'no-resolve' ? parts[parts.length - 3] : parts[parts.length - 2];
+
+        if (parts.length < 2) {
+            return rule;
+        }
+
+        for (let i = parts.length - 1; i >= 1; i--) {
+            const part = parts[i].trim();
+
+            if (['no-resolve', 'DIRECT', 'REJECT', 'PROXY'].includes(part)) {
+                continue;
+            }
+
+            if (/^[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F1E0}-\u{1F1FF}]/.test(part) ||
+                /^[🌍🌎🌏🌐🏠🏡🏢🏣🏤🏥🏦🏨🏩🏪🏫🏬🏭🏯🏰💻📱🖥️🖨️]/.test(part) ||
+                /^[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>?]/.test(part)) {
+                return part;
+            }
+
+            return part;
+        }
+
+        return parts[parts.length - 1].trim();
     }
 
     let sortedRules = [];
@@ -252,7 +273,7 @@ function sortRulesWithinGroups(config) {
 
     for (let i = 0; i < config.rules.length; i++) {
         const rule = config.rules[i];
-        const ruleTarget = getRuleTarget(rule);
+        const ruleTarget = getRuleGroup(rule);
 
         if (ruleTarget === currentGroupTarget) {
             currentGroup.push(rule);
