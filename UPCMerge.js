@@ -37,6 +37,7 @@ function main(config, profileName) {
 
     // 添加规则
     addRules(config, "AND,((NETWORK,UDP),(DST-PORT,443),(GEOSITE,youtube)),REJECT", "unshift");
+    addRules(config, "DOMAIN-SUFFIX,itunes.apple.com,DIRECT", "unshift");
 
     // 分组排序
     sortRulesWithinGroups(config)
