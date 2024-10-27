@@ -3,7 +3,7 @@ function main(config, profileName) {
     // 修改落地节点 IP 版本
     updateProxyOptionByGroup(config, "name", ["🛬 新加坡落地", "🛬 美国落地", "🛬 日本落地", "🛬 香港落地"], "ip-version", "ipv4-prefer");
 
-    设置dialer-proxy
+    // 设置dialer-proxy
     updateDialerProxyGroup(config, [
         ["🛬 新加坡落地", "🇸🇬 新加坡节点", "🇸🇬 新加坡自建落地"],
         ["🛬 美国落地", "🇺🇲 美国节点", "🇺🇲 美国自建落地"],
