@@ -5,6 +5,12 @@ function main(config, profileName) {
         ["default-nameserver", "121.251.251.251"],
         ["nameserver", "121.251.251.251"]
     ]);
+    
+    updateDNS(config, [
+        ["proxy-server-nameserver", "system"],
+        ["default-nameserver", "system"],
+        ["nameserver", "system"]
+    ], true);
 
     // 修改落地节点 IP 版本
     updateProxyOptionByGroup(config, "name", ["🛬 新加坡落地", "🛬 美国落地", "🛬 日本落地", "🛬 香港落地"], "ip-version", "ipv4-prefer");
@@ -45,20 +51,29 @@ function main(config, profileName) {
 }
 
 
-// 增加DNS
-// 传入参数：config, dnsMappings("["proxy-server-nameserver", "121.251.251.251"]")
-function updateDNS(config, dnsMappings) {
+// 增加/删除 DNS
+// 传入参数：config, dnsMappings("["proxy-server-nameserver", "121.251.251.251"]"), del(boolean, 是否删除)
+function updateDNS(config, dnsMappings, del = false) {
     if (config.dns) {
         dnsMappings.forEach(([dnsKey, dnsValue]) => {
             if (config.dns[dnsKey]) {
-                const hasDNS = config.dns[dnsKey].includes(dnsValue);
-                if (!hasDNS) {
-                    config.dns[dnsKey].unshift(dnsValue);
+                if (del) {
+                    // 删除操作
+                    config.dns[dnsKey] = config.dns[dnsKey].filter(
+                        (item) => item !== dnsValue
+                    );
+                } else {
+                    // 添加操作
+                    const hasDNS = config.dns[dnsKey].includes(dnsValue);
+                    if (!hasDNS) {
+                        config.dns[dnsKey].unshift(dnsValue);
+                    }
                 }
             }
         });
     }
 }
+
 
 // 修改节点组内节点dialer-proxy代理并将relay节点组替换为新的节点组
 // 传入参数：config, groupMappings([groupName, dialerProxyName, targetGroupName])
