@@ -39,15 +39,23 @@ function main(config, profileName) {
 }
 
 
-// 增加DNS
-// 传入参数：config, dnsMappings("["proxy-server-nameserver", "121.251.251.251"]")
-function updateDNS(config, dnsMappings) {
+// 增加/删除 DNS
+// 传入参数：config, dnsMappings("["proxy-server-nameserver", "121.251.251.251"]"), del(boolean, 是否删除)
+function updateDNS(config, dnsMappings, del = false) {
     if (config.dns) {
         dnsMappings.forEach(([dnsKey, dnsValue]) => {
             if (config.dns[dnsKey]) {
-                const hasDNS = config.dns[dnsKey].includes(dnsValue);
-                if (!hasDNS) {
-                    config.dns[dnsKey].unshift(dnsValue);
+                if (del) {
+                    // 删除操作
+                    config.dns[dnsKey] = config.dns[dnsKey].filter(
+                        (item) => item !== dnsValue
+                    );
+                } else {
+                    // 添加操作
+                    const hasDNS = config.dns[dnsKey].includes(dnsValue);
+                    if (!hasDNS) {
+                        config.dns[dnsKey].unshift(dnsValue);
+                    }
                 }
             }
         });
