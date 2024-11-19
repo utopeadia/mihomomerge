@@ -3,6 +3,7 @@ function main(config, profileName) {
     updateDNS(config, [
         ["proxy-server-nameserver", "121.251.251.251"],
         ["default-nameserver", "121.251.251.251"],
+        ["direct-nameserver", "121.251.251.251"],
         ["nameserver", "121.251.251.251"]
     ]);
     
