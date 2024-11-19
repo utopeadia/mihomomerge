@@ -10,6 +10,7 @@ function main(config, profileName) {
     updateDNS(config, [
         ["proxy-server-nameserver", "system"],
         ["default-nameserver", "system"],
+        ["direct-nameserver", "system"],
         ["nameserver", "system"]
     ], true);
 
