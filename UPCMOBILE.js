@@ -11,12 +11,12 @@ function main(config, profileName) {
     updateProxyOptionByGroup(config, "name", ["🛬 新加坡落地", "🛬 美国落地", "🛬 日本落地", "🛬 香港落地"], "ip-version", "ipv4-prefer");
 
     // 设置dialer-proxy
-    updateDialerProxyGroup(config, [
-        ["🛬 新加坡落地", "🇸🇬 新加坡节点", "🇸🇬 新加坡自建落地"],
-        ["🛬 美国落地", "🇺🇲 美国节点", "🇺🇲 美国自建落地"],
-        ["🛬 日本落地", "🇯🇵 日本节点", "🇯🇵 日本自建落地"],
-        ["🛬 香港落地", "🇭🇰 香港节点", "🇭🇰 香港自建落地"]
-    ]);
+    // updateDialerProxyGroup(config, [
+    //     ["🛬 新加坡落地", "🇸🇬 新加坡节点", "🇸🇬 新加坡自建落地"],
+    //     ["🛬 美国落地", "🇺🇲 美国节点", "🇺🇲 美国自建落地"],
+    //     ["🛬 日本落地", "🇯🇵 日本节点", "🇯🇵 日本自建落地"],
+    //     ["🛬 香港落地", "🇭🇰 香港节点", "🇭🇰 香港自建落地"]
+    // ]);
 
     // 修改节点dialer-proxy (正则匹配)
     updateProxyOption(config, "name", /日本穿透SS-/, "dialer-proxy", "🇯🇵 日本节点");
@@ -25,8 +25,8 @@ function main(config, profileName) {
     updateProxyOption(config, "name", /新加坡穿透SS-/, "dialer-proxy", "🇸🇬 新加坡节点");
 
     // 修改订阅组选项
-    updateGroupOption(config, "type", ["load-balance", "fallback", "url-test"], "lazy", false);
-    updateGroupOption(config, "type", ["load-balance"], "strategy", "round-robin");
+    updateGroupOption(config, "type", ["load-balance", "fallback", "url-test"], "lazy", true);
+    // updateGroupOption(config, "type", ["load-balance"], "strategy", "round-robin");
 
     // 修改节点 UDP over TCP 选项
     updateProxyOption(config, "type", ["vmess", "vless", "trojan", "ss", "ssr", "tuic"], "udp-over-tcp", true);
