@@ -8,9 +8,9 @@ function main(config, profileName) {
     ], true);
 
     // 正则重命名节点
-    renameProxiesByRegex(config, /‍☠ 学术/g, "📑 学术");
-    renameProxiesByRegex(config, /‍☠ 回家/g, "🏘 回家");
-    renameProxiesByRegex(config, /‍☠ CQGAS/g, "🎢 CQGAS");
+    renameProxiesByRegex(config, /‍☠️ 学术/g, "📑 学术");
+    renameProxiesByRegex(config, /☠️ 回家/g, "🏘 回家");
+    renameProxiesByRegex(config, /☠️ CQGAS/g, "🎢 CQGAS");
 
     // 修改落地节点 IP 版本
     updateProxyOptionByGroup(config, "name", ["🛬 新加坡落地", "🛬 美国落地", "🛬 日本落地", "🛬 香港落地"], "ip-version", "ipv4-prefer");
