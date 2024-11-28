@@ -7,9 +7,14 @@ function main(config, profileName) {
         ["nameserver", "121.251.251.251"]
     ]);
 
+    // 正则重命名节点
+    renameProxiesByRegex(config, /‍☠ 学术/g, "📑 学术");
+    renameProxiesByRegex(config, /‍☠ 回家/g, "🏘 回家");
+    renameProxiesByRegex(config, /‍☠ CQGAS/g, "🎢 CQGAS");
+
     // 修改落地节点 IP 版本
     updateProxyOptionByGroup(config, "name", ["🛬 新加坡落地", "🛬 美国落地", "🛬 日本落地", "🛬 香港落地"], "ip-version", "ipv4-prefer");
-
+    
     // 设置dialer-proxy
     // updateDialerProxyGroup(config, [
     //     ["🛬 新加坡落地", "🇸🇬 新加坡节点", "🇸🇬 新加坡自建落地"],
@@ -73,6 +78,25 @@ function updateDNS(config, dnsMappings, del = false) {
             }
         });
     }
+}
+
+// 根据正则表达式重命名节点
+// 传入参数：config, regex(正则表达式), newName(新名称)
+function renameProxiesByRegex(config, regex, newName) {
+    config.proxies.forEach(proxy => {
+        if (regex.test(proxy.name)) {
+            proxy.name = proxy.name.replace(regex, newName);
+        }
+    });
+
+    config["proxy-groups"].forEach(group => {
+        group.proxies = group.proxies.map(proxyName => {
+            if (regex.test(proxyName)) {
+                return proxyName.replace(regex, newName);
+            }
+            return proxyName;
+        });
+    });
 }
 
 // 修改节点组内节点dialer-proxy代理并将relay节点组替换为新的节点组
