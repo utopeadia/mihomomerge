@@ -19,10 +19,10 @@ function main(config, profileName) {
     // ]);
 
     // 修改节点dialer-proxy (正则匹配)
-    updateProxyOption(config, "name", /日本穿透SS-/, "dialer-proxy", "🇯🇵 日本节点");
-    updateProxyOption(config, "name", /香港穿透SS-/, "dialer-proxy", "🇭🇰 香港节点");
-    updateProxyOption(config, "name", /美国穿透SS-/, "dialer-proxy", "🇺🇲 美国节点");
-    updateProxyOption(config, "name", /新加坡穿透SS-/, "dialer-proxy", "🇸🇬 新加坡节点");
+    updateProxyOption(config, "name", /JP穿透SS-/, "dialer-proxy", "🇯🇵 日本节点");
+    updateProxyOption(config, "name", /HK穿透SS-/, "dialer-proxy", "🇭🇰 香港节点");
+    updateProxyOption(config, "name", /US穿透SS-/, "dialer-proxy", "🇺🇲 美国节点");
+    updateProxyOption(config, "name", /SG穿透SS-/, "dialer-proxy", "🇸🇬 新加坡节点");
 
     // 修改订阅组选项
     updateGroupOption(config, "type", ["load-balance", "fallback", "url-test"], "lazy", false);
