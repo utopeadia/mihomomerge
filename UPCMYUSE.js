@@ -32,7 +32,7 @@ function main(config, profileName) {
     updateProxyOption(config, "name", /SG穿透SS-/, "dialer-proxy", "🇸🇬 新加坡节点");
 
     // 修改订阅组选项
-    updateGroupOption(config, "type", ["load-balance", "fallback", "url-test"], "lazy", true);
+    updateGroupOption(config, "type", ["load-balance", "fallback", "url-test"], "lazy", false);
     // updateGroupOption(config, "type", ["load-balance"], "strategy", "round-robin");
 
     // 修改节点 UDP over TCP 选项
