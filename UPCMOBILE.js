@@ -7,6 +7,10 @@ function main(config, profileName) {
         ["nameserver", "121.251.251.251"]
     ]);
 
+    // 使用aes128SS
+    updateProxyOption(config, "name", /自建L/, "port", "8090")
+    updateProxyOption(config, "name", /自建L/, "cipher", "aes-128-gcm")
+
     // 修改落地节点 IP 版本
     updateProxyOptionByGroup(config, "name", ["🛬 新加坡落地", "🛬 美国落地", "🛬 日本落地", "🛬 香港落地"], "ip-version", "ipv4-prefer");
     
@@ -209,23 +213,6 @@ function addProxiesToRegexGroup(config, regex, newProxies) {
         });
     });
 }
-
-// 删除正则匹配属性节点
-// 传入参数：config, property(属性), regex(正则表达式)
-function removeProxiesByRegexProperty(config, property, regex) {
-    const removedProxyNames = [];
-    config.proxies = config.proxies.filter(proxy => {
-        if (regex.test(proxy[property])) {
-            removedProxyNames.push(proxy.name);
-            return false;
-        }
-        return true;
-    });
-    config["proxy-groups"].forEach(group => {
-        group.proxies = group.proxies.filter(proxyName => !removedProxyNames.includes(proxyName));
-    });
-}
-
 
 // 添加规则
 // 传入参数：config, newrule, position(push/unshift，默认为unshift，即最高优先级)
