@@ -8,7 +8,7 @@ function main(config, profileName) {
     ]);
 
     // 使用aes128SS
-    updateProxyOption(config, "name", /自建L/, "port", "8090")
+    updateProxyOption(config, "name", /自建L/, "port", 8090)
     updateProxyOption(config, "name", /自建L/, "cipher", "aes-128-gcm")
 
     // 修改落地节点 IP 版本
