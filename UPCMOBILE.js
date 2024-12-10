@@ -210,6 +210,23 @@ function addProxiesToRegexGroup(config, regex, newProxies) {
     });
 }
 
+// 删除正则匹配属性节点
+// 传入参数：config, property(属性), regex(正则表达式)
+function removeProxiesByRegexProperty(config, property, regex) {
+    const removedProxyNames = [];
+    config.proxies = config.proxies.filter(proxy => {
+        if (regex.test(proxy[property])) {
+            removedProxyNames.push(proxy.name);
+            return false;
+        }
+        return true;
+    });
+    config["proxy-groups"].forEach(group => {
+        group.proxies = group.proxies.filter(proxyName => !removedProxyNames.includes(proxyName));
+    });
+}
+
+
 // 添加规则
 // 传入参数：config, newrule, position(push/unshift，默认为unshift，即最高优先级)
 function addRules(config, newrule, position) {
