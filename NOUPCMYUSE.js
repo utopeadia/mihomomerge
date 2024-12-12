@@ -1,5 +1,4 @@
 function main(config, profileName) {
-
     updateDNS(config, [
         ["proxy-server-nameserver", "system"],
         ["default-nameserver", "system"],
@@ -9,7 +8,10 @@ function main(config, profileName) {
 
     // 修改落地节点 IP 版本
     updateProxyOptionByGroup(config, "name", ["🛬 新加坡落地", "🛬 美国落地", "🛬 日本落地", "🛬 香港落地"], "ip-version", "ipv4-prefer");
-
+    
+    // 关闭自建落地TCP快速打开
+    updateProxyOption(config, "name", /自建L/, "tfo", false)
+    
     // 设置dialer-proxy
     // updateDialerProxyGroup(config, [
     //     ["🛬 新加坡落地", "🇸🇬 新加坡节点", "🦁 新加坡自建落地"],
@@ -37,7 +39,7 @@ function main(config, profileName) {
     addProxiesToRegexGroup(config, /CQGAS/, "DIRECT");
 
     // 添加规则
-    addRules(config, "AND,((NETWORK,UDP),(DST-PORT,443),(GEOSITE,youtube)),REJECT", "unshift");
+    // addRules(config, "AND,((NETWORK,UDP),(DST-PORT,443),(GEOSITE,youtube)),REJECT", "unshift");
 
     // 分组排序
     sortRulesWithinGroups(config)
