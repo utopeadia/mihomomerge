@@ -7,12 +7,15 @@ function main(config, profileName) {
         ["nameserver", "121.251.251.251"]
     ]);
 
+    // 修改落地节点 IP 版本
+    updateProxyOptionByGroup(config, "name", ["🛬 新加坡落地", "🛬 美国落地", "🛬 日本落地", "🛬 香港落地"], "ip-version", "ipv4-prefer");
+    
     // 使用aes128SS
     updateProxyOption(config, "name", /自建L/, "port", 8090)
     updateProxyOption(config, "name", /自建L/, "cipher", "aes-128-gcm")
-
-    // 修改落地节点 IP 版本
-    updateProxyOptionByGroup(config, "name", ["🛬 新加坡落地", "🛬 美国落地", "🛬 日本落地", "🛬 香港落地"], "ip-version", "ipv4-prefer");
+    
+    // 关闭自建落地TCP快速打开
+    updateProxyOption(config, "name", /自建L/, "tfo", false)
     
     // 设置dialer-proxy
     // updateDialerProxyGroup(config, [
@@ -41,7 +44,7 @@ function main(config, profileName) {
     addProxiesToRegexGroup(config, /CQGAS/, "DIRECT");
 
     // 添加规则
-    addRules(config, "AND,((NETWORK,UDP),(DST-PORT,443),(GEOSITE,youtube)),REJECT", "unshift");
+    // addRules(config, "AND,((NETWORK,UDP),(DST-PORT,443),(GEOSITE,youtube)),REJECT", "unshift");
 
     // 删除vless节点
     removeProxiesByProperty(config, "type", "vless");
