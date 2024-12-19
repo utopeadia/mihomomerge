@@ -11,7 +11,7 @@ function main(config, profileName) {
     updateProxyOptionByGroup(config, "name", ["🛬 新加坡落地", "🛬 美国落地", "🛬 日本落地", "🛬 香港落地"], "ip-version", "ipv4-prefer");
     
     // 使用aes128SS
-    updateProxyOption(config, "name", /自建L/, "port", 8090)
+    updateProxyOption(config, "name", /自建L/, "port", 11369)
     updateProxyOption(config, "name", /自建L/, "cipher", "aes-128-gcm")
     
     // 关闭自建落地TCP快速打开
