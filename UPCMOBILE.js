@@ -42,7 +42,7 @@ function main(config, profileName) {
     addProxiesToRegexGroup(config, /Stream/, "DIRECT");
     addProxiesToRegexGroup(config, /回家专用延迟优先/, "DIRECT");
     addProxiesToRegexGroup(config, /CQGAS/, "DIRECT");
-    addProxiesToRegexGroup(config, /落地回退/, "DIRECT");
+    addProxiesToRegexGroup(config, /强制禁止/, "PASS", true);
 
     // 添加规则
     // addRules(config, "AND,((NETWORK,UDP),(DST-PORT,443),(GEOSITE,youtube)),REJECT", "unshift");
@@ -203,16 +203,23 @@ function updateProxyOptionByGroup(config, searchBy, targetGroups, optionName, op
 
 
 // 指定节点到正则匹配节点组
-// 传入参数：config, regex, newProxies
-function addProxiesToRegexGroup(config, regex, newProxies) {
+// 传入参数：config, regex, newProxies, del(boolean, 是否删除)
+function addProxiesToRegexGroup(config, regex, newProxies, del = false) {
     const targetGroups = config["proxy-groups"].filter(group => regex.test(group.name));
     targetGroups.forEach(targetGroup => {
         if (!Array.isArray(newProxies)) {
             newProxies = [newProxies];
         }
         newProxies.forEach(proxy => {
-            if (!targetGroup.proxies.includes(proxy)) {
-                targetGroup.proxies.push(proxy);
+            if (del) {
+                const index = targetGroup.proxies.indexOf(proxy);
+                if (index > -1) {
+                    targetGroup.proxies.splice(index, 1);
+                }
+            } else {
+                if (!targetGroup.proxies.includes(proxy)) {
+                    targetGroup.proxies.push(proxy);
+                }
             }
         });
     });
