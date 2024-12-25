@@ -8,7 +8,7 @@ function main(config, profileName) {
     ]);
 
     // 修改落地节点 IP 版本
-    updateProxyOptionByGroup(config, "name", ["🛬 新加坡落地", "🛬 美国落地", "🛬 日本落地", "🛬 香港落地"], "ip-version", "ipv4-prefer");
+    updateProxyOptionByGroup(config, "name", /.*/, "ip-version", "ipv4-prefer");
     
     // 使用aes128SS
     updateProxyOption(config, "name", /自建L/, "port", 11369)
