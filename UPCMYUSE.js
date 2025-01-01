@@ -47,9 +47,9 @@ function main(config, profileName) {
     addProxiesToRegexGroup(config, /回家专用延迟优先/, "DIRECT");
     addProxiesToRegexGroup(config, /CQGAS/, "DIRECT");
     addProxiesToRegexGroup(config, /流媒体手选/, "DIRECT");
-    
+
     // 添加新节点
-    const DIRECTv4Pre = { "name": "DIRECT-V4PRE", "type": "direct", "udp": true,  "ip-version": "ipv4-prefer"};
+    const DIRECTv4Pre = { "name": "DIRECT-V4PRE", "type": "direct", "udp": true, "ip-version": "ipv4-prefer" };
     addProxyAndGroup(config, DIRECTv4Pre, "before", "DIRECT");
 
     // 添加规则

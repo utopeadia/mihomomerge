@@ -9,14 +9,14 @@ function main(config, profileName) {
 
     // 修改落地节点 IP 版本
     updateProxyOptionByGroup(config, "name", /.*/, "ip-version", "ipv4-prefer");
-    
+
     // 使用aes128SS
     updateProxyOption(config, "name", /自建L/, "port", 11369)
     updateProxyOption(config, "name", /自建L/, "cipher", "aes-128-gcm")
-    
+
     // 关闭自建落地TCP快速打开
     updateProxyOption(config, "name", /自建L/, "tfo", false)
-    
+
     // 设置dialer-proxy
     // updateDialerProxyGroup(config, [
     //     ["🛬 新加坡落地", "🇸🇬 新加坡节点", "🦁 新加坡自建落地"],
@@ -45,9 +45,9 @@ function main(config, profileName) {
     addProxiesToRegexGroup(config, /CQGAS/, "DIRECT");
     addProxiesToRegexGroup(config, /流媒体手选/, "DIRECT");
     addProxiesToRegexGroup(config, /强制禁止/, "PASS", true);
-    
+
     // 添加新节点
-    const DIRECTv4Pre = { "name": "DIRECT-V4PRE", "type": "direct", "udp": true,  "ip-version": "ipv4-prefer"};
+    const DIRECTv4Pre = { "name": "DIRECT-V4PRE", "type": "direct", "udp": true, "ip-version": "ipv4-prefer" };
     addProxyAndGroup(config, DIRECTv4Pre, "before", "DIRECT");
 
     // 添加规则
