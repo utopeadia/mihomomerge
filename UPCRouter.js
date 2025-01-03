@@ -53,7 +53,8 @@ function main(config, profileName) {
     addProxyAndGroup(config, DIRECTv4Pre, "before", "DIRECT");
 
     // 添加规则
-    // addRules(config, "AND,((NETWORK,UDP),(DST-PORT,443),(GEOSITE,youtube)),REJECT", "unshift");
+    addRules(config, "AND,((NETWORK,UDP),(DST-PORT,443),(GEOSITE,youtube)),REJECT", "unshift");
+    addRules(config, "IP-CIDR,107.175.57.187/32,no-resolve,🤠 美国直达", "unshift");
 
     // 分组排序
     sortRulesWithinGroups(config)
