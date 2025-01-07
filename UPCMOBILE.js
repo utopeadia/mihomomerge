@@ -11,8 +11,8 @@ function main(config, profileName) {
     updateProxyOptionByGroup(config, "name", /.*/, "ip-version", "ipv4-prefer");
 
     // 使用aes128SS
-    updateProxyOption(config, "name", /自建L/, "port", 11369)
-    updateProxyOption(config, "name", /自建L/, "cipher", "aes-128-gcm")
+    // updateProxyOption(config, "name", /自建L/, "port", 11369)
+    // updateProxyOption(config, "name", /自建L/, "cipher", "aes-128-gcm")
 
     // 关闭自建落地TCP快速打开
     updateProxyOption(config, "name", /自建L/, "tfo", false)
