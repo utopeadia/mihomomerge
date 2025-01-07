@@ -29,12 +29,12 @@ function main(config, profileName) {
         ["🛬 湾湾落地", "🐉 湾湾节点", "🍍 湾湾自建落地"],
         ["🛬 西北欧落地", "🇪🇺 西北欧节点", "🗼 西北欧自建落地"]
     ]);
-    removeGroupsByRegex(config,/任选前置/);
-    removeProxiesByRegex(config,/任选前置/);
-    removeGroupsByRegex(config,/任选落地/);
-    removeProxiesByRegex(config,/任选落地/);
+    removeGroupsByRegex(config, /任选前置/);
+    removeProxiesByRegex(config, /任选前置/);
+    removeGroupsByRegex(config, /任选落地/);
+    removeProxiesByRegex(config, /任选落地/);
     updateGroupOption(config, "type", ["load-balance"], "strategy", "round-robin");
-    
+
     // 修改节点dialer-proxy (正则匹配)
     updateProxyOption(config, "name", /JP穿透SS-/, "dialer-proxy", "🇯🇵 日本节点");
     updateProxyOption(config, "name", /HK穿透SS-/, "dialer-proxy", "🇭🇰 香港节点");
