@@ -14,6 +14,9 @@ function main(config, profileName) {
     // updateProxyOption(config, "name", /自建L/, "port", 11369)
     // updateProxyOption(config, "name", /自建L/, "cipher", "aes-128-gcm")
 
+    // 删除2022-blake3-aes-256-gcm节点
+    // removeProxiesByProperty(config, "cipher", "2022-blake3-aes-256-gcm");
+
     // 关闭自建落地TCP快速打开
     updateProxyOption(config, "name", /自建L/, "tfo", false)
 
@@ -58,8 +61,6 @@ function main(config, profileName) {
     // 删除vless节点
     removeProxiesByProperty(config, "type", "vless");
 
-    // 删除2022-blake3-aes-256-gcm节点
-    removeProxiesByProperty(config, "cipher", "2022-blake3-aes-256-gcm");
 
     // 分组排序
     sortRulesWithinGroups(config)
