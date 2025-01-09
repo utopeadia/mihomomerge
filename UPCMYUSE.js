@@ -35,7 +35,7 @@ function main(config, profileName) {
         ["🛬 日本落地", "🇯🇵 日本节点", "🎎 日本自建落地"],
         ["🛬 香港落地", "🇭🇰 香港节点", "🌷 香港自建落地"],
         ["🛬 湾湾落地", "🌷 香港自建落地", "🍍 湾湾自建落地"],
-        ["🛬 西北欧落地", "🌷 香港自建落地", "🗼 西北欧自建落地"]
+        ["🛬 西北欧落地", "🦁 新加坡自建落地", "🗼 西北欧自建落地"]
     ]);
     removeGroupsByRegex(config, /任选前置/);
     removeProxiesByRegex(config, /任选前置/);
@@ -329,66 +329,16 @@ function sortRulesWithinGroups(config) {
     return config;
 }
 
-// 向 proxies 添加节点并配置属性，然后添加到指定的节点组
-// 传入参数：config, newProxy, insertMode, reference
-function addProxyAndGroup(config, newProxy, insertMode, reference) {
-    // 1. 添加节点到 config.proxies
-    if (!config.proxies) {
-        config.proxies = [];
-    }
-    config.proxies.push(newProxy);
 
-    // 2. 将节点添加到指定的节点组
-    if (insertMode === "before" || insertMode === "after") {
-        // 方式 1: 放置到包含某个节点的组的上面或者下面
-        let targetGroup = null;
-        let targetIndex = -1;
-
-        // 查找包含 reference 的节点组
-        for (let i = 0; i < config["proxy-groups"].length; i++) {
-            const group = config["proxy-groups"][i];
-            const index = group.proxies.indexOf(reference);
-            if (index > -1) {
-                targetGroup = group;
-                targetIndex = i;
-                break;
-            }
-        }
-
-        // 将节点添加到目标组
-        if (targetGroup) {
-            const referenceIndex = targetGroup.proxies.indexOf(reference);
-            if (insertMode === "before") {
-                targetGroup.proxies.splice(referenceIndex, 0, newProxy.name);
-            } else {
-                targetGroup.proxies.splice(referenceIndex + 1, 0, newProxy.name);
-            }
-        } else {
-            console.error(`Reference proxy "${reference}" not found in any group.`);
-        }
-    } else if (insertMode === "regex") {
-        // 方式 2: 放置到正则表达式允许的组
-        if (!(reference instanceof RegExp)) {
-            console.error("Reference must be a regular expression for 'regex' mode.");
-            return;
-        }
-
-        const targetGroups = config["proxy-groups"].filter(group => reference.test(group.name));
-        targetGroups.forEach(targetGroup => {
-            if (!targetGroup.proxies.includes(newProxy.name)) {
-                targetGroup.proxies.push(newProxy.name);
-            }
-        });
-    } else {
-        console.error("Invalid insertMode. Use 'before', 'after', or 'regex'.");
-    }
-}
 // 向 proxies 添加节点并配置属性，然后添加到指定的节点组
 // 传入参数：config, newProxy, insertMode(before插入特定节点之前/after插入特定节点之后/regex插入正则组), reference
 function addProxyAndGroup(config, newProxy, insertMode, reference) {
     // 1. 添加节点到 config.proxies
     if (!config.proxies) {
         config.proxies = [];
+    }
+    if (!config["proxy-groups"]) {
+        config["proxy-groups"] = [];
     }
     config.proxies.push(newProxy);
 
