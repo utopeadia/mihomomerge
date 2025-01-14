@@ -63,6 +63,9 @@ function main(config, profileName) {
     // 分组排序
     sortRulesWithinGroups(config)
 
+    // 移除LS标记
+    proxiesRename(config, "select", /\[LS\]/, "")
+
     return config;
 }
 
@@ -427,4 +430,36 @@ function removeProxiesByRegex(config, regex) {
     config["proxy-groups"].forEach(group => {
         group.proxies = group.proxies.filter(proxyName => !removedProxyNames.includes(proxyName));
     });
+}
+
+/**
+ * 重命名代理节点。
+ *
+ * @param {object} config - 代理配置对象。
+ * @param {string} type - 重命名类型，可选值为 'all' 或 'select'。
+ *                       - 'all': 将匹配正则表达式的节点名称完全替换为 newname。
+ *                       - 'select': 仅将节点名称中匹配正则表达式的部分替换为 newname。
+ * @param {RegExp} regex - 用于匹配节点名称的正则表达式。
+ * @param {string} newname - 新的节点名称字符串。
+ * @returns {object} - 修改后的代理配置对象。
+ */
+function proxiesRename(config, type, regex, newname) {
+    config.proxies.forEach(proxy => {
+        if (regex.test(proxy.name)) {
+            const oldName = proxy.name;
+            if (type === 'all') {
+                proxy.name = newname;
+            } else if (type === 'select') {
+                proxy.name = proxy.name.replace(regex, newname);
+            }
+
+            config["proxy-groups"].forEach(group => {
+                const index = group.proxies.indexOf(oldName);
+                if (index > -1) {
+                    group.proxies[index] = proxy.name;
+                }
+            });
+        }
+    });
+    return config;
 }
