@@ -1,8 +1,5 @@
 function main(config, profileName) {
 
-    // 添加出栈端口
-    modifyConfigByPath(config, "", null, null, "interface-name", "eth0");
-
     updateDNS(config, [
         ["proxy-server-nameserver", "121.251.251.251"],
         ["default-nameserver", "121.251.251.251"],
@@ -76,6 +73,9 @@ function main(config, profileName) {
 
     // 移除LS标记
     proxiesRename(config, "select", /\[LS\]/, "")
+
+    // 添加出栈端口
+    // modifyConfigByPath(config, "", null, null, "interface-name", "eth0");
 
     return config;
 }
