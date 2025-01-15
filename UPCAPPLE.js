@@ -479,3 +479,107 @@ function proxiesRename(config, type, regex, newname) {
     });
     return config;
 }
+
+/**
+ * 根据层级路径、查找条件和修改键值对修改配置对象中的属性。
+ *
+ * @param {object} config - 要修改的配置对象。
+ * @param {string} path - 要修改的属性的层级路径，例如 "proxy-groups.name" 或 "tun.enable"。空字符串 "" 表示修改全局配置。
+ * @param {string} [searchKey] - 用于查找的属性名（可选）。如果为空，则表示修改全局配置。
+ * @param {*} [searchValue] - 用于查找的属性值（可选）。
+ * @param {string} modifyKey - 要修改的属性名。
+ * @param {*} modifyValue - 要设置的属性值。
+ * @returns {object} - 修改后的配置对象。
+ *
+ * @example
+ * // 假设的配置对象
+ * let config = {
+ *     "proxy-groups": [
+ *         { "name": "Group1", "type": "select" },
+ *         { "name": "Group2", "type": "url-test" }
+ *     ],
+ *     "tun": {
+ *         "enable": false
+ *     },
+ *     "port": 7890
+ * };
+ *
+ * // 1. 根据 name 修改节点组属性 proxy-groups.name 查找 type 进行修改
+ * config = modifyConfigByPath(config, "proxy-groups", "name", "Group1", "type", "fallback");
+ *
+ * // 2. 根据类型修改节点组 proxies proxy-groups.type 查找 proxies 进行修改
+ * config = modifyConfigByPath(config, "proxy-groups", "type", "url-test", "proxies", ["节点C"]);
+ *
+ * // 3. 可以修改全局配置比如查找 port 进行修改
+ * config = modifyConfigByPath(config, "", null, null, "port", 7891);
+ *
+ * // 4. 或者 tun 查找 enable 进行修改
+ * config = modifyConfigByPath(config, "tun", "enable", false, "enable", true);
+ *
+ * // 5. 如果不存在的属性则进行创建 (在 proxy-groups 中为 Group1 添加新属性 custom)
+ * config = modifyConfigByPath(config, "proxy-groups", "name", "Group1", "custom", "value");
+ *
+ * // 6. 如果不存在的全局属性则进行创建
+ * config = modifyConfigByPath(config, "", null, null, "newGlobalOption", "new value");
+ */
+function modifyConfigByPath(config, path, searchKey, searchValue, modifyKey, modifyValue) {
+    if (path === "") {
+        config[modifyKey] = modifyValue;
+        return config;
+    }
+
+    const pathSegments = path.split('.');
+    let current = config;
+    let parent = null;
+    let currentKey = null;
+
+    for (const segment of pathSegments) {
+        parent = current;
+        currentKey = segment;
+        if (current && current.hasOwnProperty(segment)) {
+            current = current[segment];
+        } else {
+            // 如果路径不存在，则创建
+            if (parent) {
+                parent[segment] = {};
+                current = parent[segment];
+            } else {
+                console.error(`路径 ${path} 不存在且无法创建。`);
+                return config;
+            }
+        }
+    }
+
+    if (Array.isArray(current)) {
+        // 处理数组类型的目标，例如 proxy-groups
+        current.forEach(item => {
+            if (item && item.hasOwnProperty(searchKey) && item[searchKey] === searchValue) {
+                if (modifyKey) {
+                    item[modifyKey] = modifyValue;
+                } else {
+                    // 如果没有 modifyKey，则直接修改当前项
+                    console.warn("未指定 modifyKey，无法修改数组元素。");
+                }
+            }
+        });
+    } else if (typeof current === 'object' && current !== null) {
+        if (searchKey && current.hasOwnProperty(searchKey)) {
+            if (current[searchKey] === searchValue) {
+                current[modifyKey] = modifyValue;
+            }
+        } else if (!searchKey && modifyKey) {
+            // 修改全局配置
+            current[modifyKey] = modifyValue;
+        } else if (!searchKey && !modifyKey) {
+            console.warn("未指定 searchKey 或 modifyKey，无法修改对象。");
+        }
+    } else if (parent && currentKey && modifyKey) {
+        // 处理需要创建属性的情况
+        parent[currentKey] = parent[currentKey] || {};
+        parent[currentKey][modifyKey] = modifyValue;
+    } else {
+        console.warn(`无法修改路径 ${path}，请检查路径和参数。`);
+    }
+
+    return config;
+}
