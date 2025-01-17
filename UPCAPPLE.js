@@ -74,7 +74,7 @@ function main(config, profileName) {
 
 
     // 分组排序
-    sortRulesWithinGroups(config)
+    // sortRulesWithinGroups(config)
 
     // 移除LS标记
     proxiesRename(config, "select", /\[LS\]/, "")
