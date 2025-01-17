@@ -51,7 +51,7 @@ function main(config, profileName) {
     updateProxyOption(config, "name", /TW穿透SS-/, "dialer-proxy", "🐉 湾湾节点");
 
     // 修改订阅组选项
-    updateGroupOption(config, "type", ["load-balance", "fallback", "url-test"], "lazy", true);
+    updateGroupOption(config, "type", ["load-balance", "fallback", "url-test"], "lazy", false);
 
     // 修改节点 UDP over TCP 选项
     updateProxyOption(config, "type", ["vmess", "vless", "trojan", "ss", "ssr", "tuic"], "udp-over-tcp", true);
