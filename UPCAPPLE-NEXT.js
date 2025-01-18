@@ -10,12 +10,11 @@ function main(config, profileName) {
     // 修改落地节点 IP 版本
     updateProxyOptionByGroup(config, "name", /.*/, "ip-version", "ipv4-prefer");
 
-    // 使用aes128SS
-    updateProxyOption(config, "name", /自建L/, "port", 11369)
-    updateProxyOption(config, "name", /自建L/, "cipher", "aes-128-gcm")
-
-    // 删除2022-blake3-aes-128-gcm节点
-    removeProxiesByProperty(config, "cipher", "2022-blake3-aes-128-gcm");
+    // // 使用aes128SS
+    // updateProxyOption(config, "name", /自建L/, "port", 11369)
+    // updateProxyOption(config, "name", /自建L/, "cipher", "aes-128-gcm")
+    // // 删除2022-blake3-aes-128-gcm节点
+    // removeProxiesByProperty(config, "cipher", "2022-blake3-aes-128-gcm");
 
     // 关闭自建落地TCP快速打开
     updateProxyOption(config, "name", /自建L/, "tfo", false);
