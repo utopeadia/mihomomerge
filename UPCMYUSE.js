@@ -8,13 +8,13 @@ function main(config, profileName) {
         ["nameserver", "121.251.251.251"]
     ]);
 
-    // 移除system规则
-    updateDNS(config, [
-        ["proxy-server-nameserver", "system"],
-        ["default-nameserver", "system"],
-        ["direct-nameserver", "system"],
-        ["nameserver", "system"]
-    ], true);
+    // // 移除system规则
+    // updateDNS(config, [
+    //     ["proxy-server-nameserver", "system"],
+    //     ["default-nameserver", "system"],
+    //     ["direct-nameserver", "system"],
+    //     ["nameserver", "system"]
+    // ], true);
 
     // 修改落地节点 IP 版本
     updateProxyOptionByGroup(config, "name", /.*/, "ip-version", "ipv4-prefer");
