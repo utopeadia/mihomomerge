@@ -1,11 +1,28 @@
 function main(config, profileName) {
 
+    // 添加UPCDNS
     updateDNS(config, [
         ["proxy-server-nameserver", "121.251.251.251"],
         ["default-nameserver", "121.251.251.251"],
         ["direct-nameserver", "121.251.251.251"],
         ["nameserver", "121.251.251.251"]
     ]);
+
+    // 添加山东联通DNS
+    updateDNS(config, [
+        ["proxy-server-nameserver", "202.102.134.68"],
+        ["default-nameserver", "202.102.134.68"],
+        ["direct-nameserver", "202.102.134.68"],
+        ["nameserver", "202.102.134.68"]
+    ]);
+
+    // 移除system规则
+    updateDNS(config, [
+        ["proxy-server-nameserver", "system"],
+        ["default-nameserver", "system"],
+        ["direct-nameserver", "system"],
+        ["nameserver", "system"]
+    ], true);
 
     // 修改落地节点 IP 版本
     updateProxyOptionByGroup(config, "name", /.*/, "ip-version", "ipv4-prefer");

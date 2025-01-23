@@ -1,5 +1,6 @@
 function main(config, profileName) {
 
+    // 添加UPCDNS
     updateDNS(config, [
         ["proxy-server-nameserver", "121.251.251.251"],
         ["default-nameserver", "121.251.251.251"],
@@ -7,6 +8,7 @@ function main(config, profileName) {
         ["nameserver", "121.251.251.251"]
     ]);
 
+    // 移除system规则
     updateDNS(config, [
         ["proxy-server-nameserver", "system"],
         ["default-nameserver", "system"],
