@@ -10,10 +10,8 @@ function main(config, profileName) {
 
     // 添加山东联通DNS
     updateDNS(config, [
-        ["proxy-server-nameserver", "202.102.134.68"],
         ["default-nameserver", "202.102.134.68"],
-        ["direct-nameserver", "202.102.134.68"],
-        ["nameserver", "202.102.134.68"]
+        ["direct-nameserver", "202.102.134.68"]
     ]);
 
     // // 移除system规则
