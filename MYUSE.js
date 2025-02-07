@@ -261,6 +261,22 @@ function addRules(config, newrule, position) {
     }
 }
 
+// 删除规则
+// 传入参数：config, ruleToDelete (要删除的规则，可以是字符串或正则表达式)
+function delRules(config, ruleToDelete) {
+    if (!config || !config.rules || !Array.isArray(config.rules)) {
+      return;
+    }
+    const isRegExp = ruleToDelete instanceof RegExp;
+    config.rules = config.rules.filter(rule => {
+      if (isRegExp) {
+        return !ruleToDelete.test(rule);
+      } else {
+        return rule !== ruleToDelete;
+      }
+    });
+  }
+
 // 删除指定属性节点
 // 传入参数：config, property(属性), value(值)
 function removeProxiesByProperty(config, property, value) {
