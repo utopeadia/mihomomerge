@@ -25,6 +25,12 @@ function main(config, profileName) {
     // 修改落地节点 IP 版本
     updateProxyOptionByGroup(config, "name", /.*/, "ip-version", "ipv4-prefer");
 
+    // 配置Stash单节点测速地址
+    updateProxyOption(config, "name", /学术\|/, "benchmark-url", "http://121.251.251.207");
+    updateProxyOption(config, "name", /学术\|/, "benchmark-timeout", "5");
+    updateProxyOption(config, "name", /回家\|/, "benchmark-url", "http://192.168.67.180:5244");
+    updateProxyOption(config, "name", /回家\|/, "benchmark-timeout", "5");
+
     // 使用aes128SS
     updateProxyOption(config, "name", /自建L/, "port", 8936)
     updateProxyOption(config, "name", /自建L/, "cipher", "aes-128-gcm")
