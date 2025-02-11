@@ -45,7 +45,7 @@ function main(config, profileName) {
         ["🛬 香港落地", "🇭🇰 香港节点", "🌷 香港自建落地"],
         ["🛬 湾湾落地", "🌷 香港自建落地", "🍍 湾湾自建落地"],
         ["🛬 西北欧落地", "🦁 新加坡自建落地", "🗼 西北欧自建落地"],
-        ["🛬 英国落地", "🌷 香港自建落地", "💂 英国自建落地"]
+        ["🛬 英国落地", "🦁 新加坡自建落地", "💂 英国自建落地"]
     ]);
     removeGroupsByRegex(config, /任选前置/);
     removeProxiesByRegex(config, /任选前置/);
@@ -113,29 +113,33 @@ function updateDNS(config, dnsMappings, del = false) {
 // 修改节点组内节点dialer-proxy代理并将relay节点组替换为新的节点组
 // 传入参数：config, groupMappings([groupName, dialerProxyName, targetGroupName])
 // 例如原逻辑为：自建落地（groupName）节点组为：自建节点1、自建节点2，relay节点组（targetGroupName）为：前置节点（dialerProxyName）、自建落地，通过脚本可以将自建节点1、自建节点2添加前置节点作为dialer-proxy代理，并修改relay节点组为select且只保留自建落地节点组
+// 若groupName中为空或DIRECT，那么则targetGroupName添加dialerProxyName并设置为select
 function updateDialerProxyGroup(config, groupMappings) {
     groupMappings.forEach(([groupName, dialerProxyName, targetGroupName]) => {
         const group = config["proxy-groups"].find(group => group.name === groupName);
-        if (group) {
+        const targetGroupIndex = config["proxy-groups"].findIndex(group => group.name === targetGroupName);
+        // 检查 group.proxies 是否为空或仅包含 "DIRECT"
+        const hasOnlyDirect = group.proxies.length === 0 || group.proxies.every(proxyName => proxyName === "DIRECT");
+        if (hasOnlyDirect) {
+            config["proxy-groups"][targetGroupIndex] = {
+                name: targetGroupName,
+                type: "select",
+                proxies: [dialerProxyName],
+            };
+        } else {
             group.proxies.forEach(proxyName => {
                 if (proxyName !== "DIRECT") {
-                    const proxy = (config.proxies || []).find(p => p.name === proxyName);
+                    const proxy = config.proxies.find(p => p.name === proxyName);
                     if (proxy) {
                         proxy["dialer-proxy"] = dialerProxyName;
                     }
                 }
             });
-
-            if (group.proxies.length > 0) {
-                const targetGroupIndex = config["proxy-groups"].findIndex(group => group.name === targetGroupName);
-                if (targetGroupIndex !== -1) {
-                    config["proxy-groups"][targetGroupIndex] = {
-                        name: targetGroupName,
-                        type: "select",
-                        proxies: [groupName],
-                    };
-                }
-            }
+            config["proxy-groups"][targetGroupIndex] = {
+                name: targetGroupName,
+                type: "select",
+                proxies: [groupName],
+            };
         }
     });
 }
@@ -227,7 +231,6 @@ function updateProxyOptionByGroup(config, searchBy, targetGroups, optionName, op
     });
 }
 
-
 // 指定节点到正则匹配节点组
 // 传入参数：config, regex, newProxies, del(boolean, 是否删除)
 function addProxiesToRegexGroup(config, regex, newProxies, del = false) {
@@ -265,17 +268,17 @@ function addRules(config, newrule, position) {
 // 传入参数：config, ruleToDelete (要删除的规则，可以是字符串或正则表达式)
 function delRules(config, ruleToDelete) {
     if (!config || !config.rules || !Array.isArray(config.rules)) {
-      return;
+        return;
     }
     const isRegExp = ruleToDelete instanceof RegExp;
     config.rules = config.rules.filter(rule => {
-      if (isRegExp) {
-        return !ruleToDelete.test(rule);
-      } else {
-        return rule !== ruleToDelete;
-      }
+        if (isRegExp) {
+            return !ruleToDelete.test(rule);
+        } else {
+            return rule !== ruleToDelete;
+        }
     });
-  }
+}
 
 // 删除指定属性节点
 // 传入参数：config, property(属性), value(值)
