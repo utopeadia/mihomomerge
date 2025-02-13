@@ -23,7 +23,7 @@ function main(config, profileName) {
     ], true);
 
     // 修改落地节点 IP 版本
-    updateProxyOptionByGroup(config, "name", /.*/, "ip-version", "ipv4-prefer");
+    // updateProxyOptionByGroup(config, "name", /.*/, "ip-version", "ipv4-prefer");
 
     // 关闭自建落地TCP快速打开
     updateProxyOption(config, "name", /自建L/, "tfo", false);
