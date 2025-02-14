@@ -70,6 +70,8 @@ function main(config, profileName) {
     addProxyAndGroup(config, DIRECTv4Pre, "before", "DIRECT");
 
     // 添加规则
+    addRules(config,"DOMAIN-SUFFIX,webvpn.upc.edu.cn,🚄 本地直连", "unshift")
+    addRules(config,"DOMAIN-SUFFIX,sslvpn.upc.edu.cn,🚄 本地直连", "unshift")
     // addRules(config, "AND,((NETWORK,UDP),(DST-PORT,443),(GEOSITE,youtube)),REJECT", "unshift");
 
     // 分组排序
