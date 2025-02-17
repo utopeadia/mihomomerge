@@ -114,6 +114,9 @@ function updateDialerProxyGroup(config, groupMappings) {
     groupMappings.forEach(([groupName, dialerProxyName, targetGroupName]) => {
         const group = config["proxy-groups"].find(group => group.name === groupName);
         const targetGroupIndex = config["proxy-groups"].findIndex(group => group.name === targetGroupName);
+        if (targetGroupIndex === -1) {
+            return;
+        }
         // 检查 group.proxies 是否为空或仅包含 "DIRECT"
         const hasOnlyDirect = group.proxies.length === 0 || group.proxies.every(proxyName => proxyName === "DIRECT");
         if (hasOnlyDirect) {
