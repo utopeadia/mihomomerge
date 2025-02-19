@@ -8,12 +8,6 @@ function main(config, profileName) {
         ["nameserver", "121.251.251.251"]
     ]);
 
-    // 添加山东联通DNS
-    updateDNS(config, [
-        ["default-nameserver", "202.102.134.68"],
-        ["direct-nameserver", "202.102.134.68"]
-    ]);
-
     // 移除system规则
     updateDNS(config, [
         ["proxy-server-nameserver", "system"],
@@ -38,20 +32,20 @@ function main(config, profileName) {
     //     ["🛬 西北欧落地", "🇪🇺 西北欧节点", "🗼 西北欧自建落地"],
     //     ["🛬 英国落地", "🇬🇧 英国节点", "💂 英国自建落地"]
     // ]);
-    updateDialerProxyGroup(config, [
-        ["🛬 新加坡落地", "🇸🇬 新加坡节点", "🦁 新加坡自建落地"],
-        ["🛬 美国落地", "🇺🇲 美国节点", "💵 美国自建落地"],
-        ["🛬 日本落地", "🇯🇵 日本节点", "🎎 日本自建落地"],
-        ["🛬 香港落地", "🇭🇰 香港节点", "🌷 香港自建落地"],
-        ["🛬 湾湾落地", "🐉 湾湾节点", "🍍 湾湾自建落地"],
-        ["🛬 西北欧落地", "🇪🇺 西北欧节点", "🗼 西北欧自建落地"],
-        ["🛬 英国落地", "🦁 新加坡自建落地", "💂 英国自建落地"]
-    ]);
-    removeGroupsByRegex(config, /任选前置/);
-    removeProxiesByRegex(config, /任选前置/);
-    removeGroupsByRegex(config, /任选落地/);
-    removeProxiesByRegex(config, /任选落地/);
-    updateGroupOption(config, "type", ["load-balance"], "strategy", "round-robin");
+    // updateDialerProxyGroup(config, [
+    //     ["🛬 新加坡落地", "🇸🇬 新加坡节点", "🦁 新加坡自建落地"],
+    //     ["🛬 美国落地", "🇺🇲 美国节点", "💵 美国自建落地"],
+    //     ["🛬 日本落地", "🇯🇵 日本节点", "🎎 日本自建落地"],
+    //     ["🛬 香港落地", "🇭🇰 香港节点", "🌷 香港自建落地"],
+    //     ["🛬 湾湾落地", "🐉 湾湾节点", "🍍 湾湾自建落地"],
+    //     ["🛬 西北欧落地", "🇪🇺 西北欧节点", "🗼 西北欧自建落地"],
+    //     ["🛬 英国落地", "🦁 新加坡自建落地", "💂 英国自建落地"]
+    // ]);
+    // removeGroupsByRegex(config, /任选前置/);
+    // removeProxiesByRegex(config, /任选前置/);
+    // removeGroupsByRegex(config, /任选落地/);
+    // removeProxiesByRegex(config, /任选落地/);
+    // updateGroupOption(config, "type", ["load-balance"], "strategy", "round-robin");
 
     // 修改节点dialer-proxy (正则匹配)
     updateProxyOption(config, "name", /JP穿透SS-/, "dialer-proxy", "🇯🇵 日本节点");
@@ -78,16 +72,13 @@ function main(config, profileName) {
     // 添加规则
     addRules(config,"DOMAIN-SUFFIX,webvpn.upc.edu.cn,🚄 本地直连", "unshift")
     addRules(config,"DOMAIN-SUFFIX,sslvpn.upc.edu.cn,🚄 本地直连", "unshift")
-    // addRules(config, "AND,((NETWORK,UDP),(DST-PORT,443),(GEOSITE,youtube)),REJECT", "unshift");
+    addRules(config,"DOMAIN-SUFFIX,www.upc.edu.cn,🚄 本地直连", "unshift")
 
     // 分组排序
     // sortRulesWithinGroups(config)
 
     // 移除LS标记
     proxiesRename(config, "select", /\[LS\]/, "")
-
-    // 添加出栈端口
-    // modifyConfigByPath(config, "", null, null, "interface-name", "eth0");
 
     return config;
 }
@@ -369,6 +360,7 @@ function sortRulesWithinGroups(config) {
     config.rules = sortedRules;
     return config;
 }
+
 
 // 向 proxies 添加节点并配置属性，然后添加到指定的节点组
 // 传入参数：config, newProxy, insertMode(before插入特定节点之前/after插入特定节点之后/regex插入正则组), reference
