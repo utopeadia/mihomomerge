@@ -609,3 +609,14 @@ function modifyConfigByPath(config, path, searchKey, searchValue, modifyKey, mod
 
     return config;
 }
+
+// 移除所有为Null的对象
+function removeNullValues(config) {
+    for (const key in config) {
+        if (config[key] === null) {
+            delete config[key];
+        } else if (typeof config[key] === 'object') {
+            removeNullValues(config[key]);
+        }
+    }
+}

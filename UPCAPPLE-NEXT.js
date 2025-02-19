@@ -22,6 +22,10 @@ function main(config, profileName) {
         ["nameserver", "system"]
     ], true);
 
+    //移除nameserver-proce
+    modifyConfigByPath(config, 'dns', null, null, 'nameserver-policy', null)
+    removeNullValues(config)
+
     // 修改落地节点 IP 版本
     // updateProxyOptionByGroup(config, "name", /.*/, "ip-version", "ipv4-prefer");
 
@@ -634,4 +638,15 @@ function modifyConfigByPath(config, path, searchKey, searchValue, modifyKey, mod
     }
 
     return config;
+}
+
+// 移除所有为Null的对象
+function removeNullValues(config) {
+    for (const key in config) {
+        if (config[key] === null) {
+            delete config[key];
+        } else if (typeof config[key] === 'object') {
+            removeNullValues(config[key]);
+        }
+    }
 }
