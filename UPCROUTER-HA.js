@@ -38,20 +38,20 @@ function main(config, profileName) {
     //     ["🛬 西北欧落地", "🇪🇺 西北欧节点", "🗼 西北欧自建落地"],
     //     ["🛬 英国落地", "🇬🇧 英国节点", "💂 英国自建落地"]
     // ]);
-    updateDialerProxyGroup(config, [
-        ["🛬 新加坡落地", "🇸🇬 新加坡节点", "🦁 新加坡自建落地"],
-        ["🛬 美国落地", "🇺🇲 美国节点", "💵 美国自建落地"],
-        ["🛬 日本落地", "🇯🇵 日本节点", "🎎 日本自建落地"],
-        ["🛬 香港落地", "🇭🇰 香港节点", "🌷 香港自建落地"],
-        ["🛬 湾湾落地", "🐉 湾湾节点", "🍍 湾湾自建落地"],
-        ["🛬 西北欧落地", "🇪🇺 西北欧节点", "🗼 西北欧自建落地"],
-        ["🛬 英国落地", "🦁 新加坡自建落地", "💂 英国自建落地"]
-    ]);
-    removeGroupsByRegex(config, /任选前置/);
-    removeProxiesByRegex(config, /任选前置/);
-    removeGroupsByRegex(config, /任选落地/);
-    removeProxiesByRegex(config, /任选落地/);
-    // updateGroupOption(config, "type", ["load-balance"], "strategy", "round-robin");
+    // updateDialerProxyGroup(config, [
+    //     ["🛬 新加坡落地", "🇸🇬 新加坡节点", "🦁 新加坡自建落地"],
+    //     ["🛬 美国落地", "🇺🇲 美国节点", "💵 美国自建落地"],
+    //     ["🛬 日本落地", "🇯🇵 日本节点", "🎎 日本自建落地"],
+    //     ["🛬 香港落地", "🇭🇰 香港节点", "🌷 香港自建落地"],
+    //     ["🛬 湾湾落地", "🐉 湾湾节点", "🍍 湾湾自建落地"],
+    //     ["🛬 西北欧落地", "🇪🇺 西北欧节点", "🗼 西北欧自建落地"],
+    //     ["🛬 英国落地", "🦁 新加坡自建落地", "💂 英国自建落地"]
+    // ]);
+    // removeGroupsByRegex(config, /任选前置/);
+    // removeProxiesByRegex(config, /任选前置/);
+    // removeGroupsByRegex(config, /任选落地/);
+    // removeProxiesByRegex(config, /任选落地/);
+    // // updateGroupOption(config, "type", ["load-balance"], "strategy", "round-robin");
 
     // 修改节点dialer-proxy (正则匹配)
     updateProxyOption(config, "name", /JP穿透SS-/, "dialer-proxy", "🇯🇵 日本节点");
