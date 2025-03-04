@@ -4,21 +4,13 @@ function main(config, profileName) {
     updateDNS(config, [
         ["proxy-server-nameserver", "121.251.251.251"],
         ["default-nameserver", "121.251.251.251"],
-        ["direct-nameserver", "121.251.251.251"],
         ["nameserver", "121.251.251.251"]
-    ]);
-
-    // 添加山东联通DNS
-    updateDNS(config, [
-        ["default-nameserver", "202.102.134.68"],
-        ["direct-nameserver", "202.102.134.68"]
     ]);
 
     // 移除system规则
     updateDNS(config, [
         ["proxy-server-nameserver", "system"],
         ["default-nameserver", "system"],
-        ["direct-nameserver", "system"],
         ["nameserver", "system"]
     ], true);
 
