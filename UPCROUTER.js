@@ -10,7 +10,7 @@ function main(config, profileName) {
     // 移除system规则
     updateDNS(config, [
         ["proxy-server-nameserver", "system"],
-        ["default-nameserver", "system"]
+        ["default-nameserver", "system"],
         ["nameserver", "system"]
     ], true);
 
