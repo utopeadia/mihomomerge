@@ -14,7 +14,20 @@ function main(config, profileName) {
         ["nameserver", "system"]
     ], true);
 
-    //移除nameserver-proce
+    // 添加DH-DNS上海
+    updateDNS(config, [
+        ["proxy-server-nameserver", "https://dh-dns.global-idt.net/dns-query#DIRECT&h3=true&skip-cert-verify=true"],
+        ["default-nameserver", "https://dh-dns.global-idt.net/dns-query#DIRECT&h3=true&skip-cert-verify=true"],
+        ["fallback", "https://dh-dns.global-idt.net/dns-query#DIRECT&h3=true&skip-cert-verify=true"]
+    ]);
+    // 添加DH-DNS北京
+    updateDNS(config, [
+        ["proxy-server-nameserver", "https://north.dh-global-team.net:438/dns-query#DIRECT&h3=true&skip-cert-verify=true"],
+        ["default-nameserver", "https://north.dh-global-team.net:438/dns-query#DIRECT&h3=true&skip-cert-verify=true"],
+        ["fallback", "https://north.dh-global-team.net:438/dns-query#DIRECT&h3=true&skip-cert-verify=true"]
+    ]);
+
+    //移除nameserver-policy
     modifyConfigByPath(config, 'dns', null, null, 'nameserver-policy', null)
     removeNullValues(config)
 

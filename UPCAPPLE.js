@@ -6,13 +6,7 @@ function main(config, profileName) {
         ["default-nameserver", "121.251.251.251"],
         ["nameserver", "121.251.251.251"]
     ]);
-
-    // 添加山东联通DNS
-    updateDNS(config, [
-        ["default-nameserver", "202.102.134.68"],
-        ["direct-nameserver", "202.102.134.68"]
-    ]);
-
+   
     // 移除system规则
     updateDNS(config, [
         ["proxy-server-nameserver", "system"],
@@ -20,7 +14,20 @@ function main(config, profileName) {
         ["nameserver", "system"]
     ], true);
 
-    //移除nameserver-proce
+    // 添加DH-DNS上海
+    updateDNS(config, [
+        ["proxy-server-nameserver", "https://dh-dns.global-idt.net/dns-query#DIRECT&h3=true&skip-cert-verify=true"],
+        ["default-nameserver", "https://dh-dns.global-idt.net/dns-query#DIRECT&h3=true&skip-cert-verify=true"],
+        ["fallback", "https://dh-dns.global-idt.net/dns-query#DIRECT&h3=true&skip-cert-verify=true"]
+    ]);
+    // 添加DH-DNS北京
+    updateDNS(config, [
+        ["proxy-server-nameserver", "https://north.dh-global-team.net:438/dns-query#DIRECT&h3=true&skip-cert-verify=true"],
+        ["default-nameserver", "https://north.dh-global-team.net:438/dns-query#DIRECT&h3=true&skip-cert-verify=true"],
+        ["fallback", "https://north.dh-global-team.net:438/dns-query#DIRECT&h3=true&skip-cert-verify=true"]
+    ]);
+    
+   //移除nameserver-policy
     modifyConfigByPath(config, 'dns', null, null, 'nameserver-policy', null)
     removeNullValues(config)
 
