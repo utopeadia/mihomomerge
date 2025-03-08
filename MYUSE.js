@@ -14,16 +14,16 @@ function main(config, profileName) {
     //     ["nameserver", "system"]
     // ], true);
 
-    // 添加DH-DNS上海
-    updateDNS(config, [
-        ["proxy-server-nameserver", "https://dh-dns.global-idt.net/dns-query#RULES&h3=true&skip-cert-verify=true"],
-        ["fallback", "https://dh-dns.global-idt.net/dns-query#RULES&h3=true&skip-cert-verify=true"]
-    ]);
-    // 添加DH-DNS北京
-    updateDNS(config, [
-        ["proxy-server-nameserver", "https://north.dh-global-team.net:438/dns-query#RULES&h3=true&skip-cert-verify=true"],
-        ["fallback", "https://north.dh-global-team.net:438/dns-query#RULES&h3=true&skip-cert-verify=true"]
-    ]);
+    // // 添加DH-DNS上海
+    // updateDNS(config, [
+    //     ["proxy-server-nameserver", "https://dh-dns.global-idt.net/dns-query#RULES&h3=true&skip-cert-verify=true"],
+    //     ["fallback", "https://dh-dns.global-idt.net/dns-query#RULES&h3=true&skip-cert-verify=true"]
+    // ]);
+    // // 添加DH-DNS北京
+    // updateDNS(config, [
+    //     ["proxy-server-nameserver", "https://north.dh-global-team.net:438/dns-query#RULES&h3=true&skip-cert-verify=true"],
+    //     ["fallback", "https://north.dh-global-team.net:438/dns-query#RULES&h3=true&skip-cert-verify=true"]
+    // ]);
     
     // 修改落地节点 IP 版本
     // updateProxyOptionByGroup(config, "name", /.*/, "ip-version", "ipv4-prefer");
