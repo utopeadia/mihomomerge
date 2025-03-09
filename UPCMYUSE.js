@@ -76,7 +76,7 @@ function main(config, profileName) {
 
     // 添加新节点
     const DIRECTv4Pre = { "name": "DIRECT-V4PRE", "type": "direct", "udp": true, "ip-version": "ipv4-prefer" };
-    addProxyAndGroup(config, DIRECTv4Pre, "before", "DIRECT");
+    addProxyAndGroup(config, DIRECTv4Pre, "after", "DIRECT");
 
     // 添加规则
     addRules(config,"DOMAIN-SUFFIX,ai-assistant.upc.edu.cn,📚 学术直连", "unshift")
