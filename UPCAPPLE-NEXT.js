@@ -106,10 +106,6 @@ function main(config, profileName) {
     addRules(config,"DOMAIN-SUFFIX,sslvpn.upc.edu.cn,🚄 本地直连", "unshift")
     addRules(config,"DOMAIN-SUFFIX,www.upc.edu.cn,🚄 本地直连", "unshift")
 
-    // 删除vless节点
-    removeProxiesByProperty(config, "type", "vless");
-
-
     // 分组排序
     // sortRulesWithinGroups(config)
 
