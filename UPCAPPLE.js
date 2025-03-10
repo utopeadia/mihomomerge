@@ -87,8 +87,11 @@ function main(config, profileName) {
     // 修改订阅组选项
     updateGroupOption(config, "type", ["load-balance", "fallback", "url-test"], "lazy", false);
 
-    // 修改节点 UDP over TCP 选项
-    updateProxyOption(config, "type", ["vmess", "vless", "trojan", "ss", "ssr", "tuic"], "udp-over-tcp", true);
+    // 修改节点skip-cert-verify选项
+    updateProxyOption(config, "type", ["vmess", "vless", "trojan", "ss", "hysteria2", "tuic"], "skip-cert-verify", true);
+
+    // // 修改节点 UDP over TCP 选项
+    // updateProxyOption(config, "type", ["vmess", "vless", "trojan", "ss", "ssr", "tuic"], "udp-over-tcp", true);
 
     // 添加节点到正则组
     addProxiesToRegexGroup(config, /回家专用延迟优先/, "DIRECT");
