@@ -50,8 +50,6 @@ function main(config, profileName) {
     // removeProxiesByProperty(config, "cipher", "2022-blake3-aes-128-gcm");
     // // 删除vless节点
     // removeProxiesByProperty(config, "type", "vless");
-    // 删除hysteria2节点
-    removeProxiesByProperty(config, "type", "hysteria2");
 
     // 关闭自建落地TCP快速打开
     updateProxyOption(config, "name", /自建L/, "tfo", false);
