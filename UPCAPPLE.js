@@ -125,7 +125,7 @@ function main(config, profileName) {
 }
 
 // 增加/删除 DNS
-// 传入参数：config, dnsMappings("["proxy-server-nameserver", "121.251.251.251"]"), del(boolean, 是否删除), createKey(boolean, 是否自动创建 dnsKey)
+// 传入参数：config, dnsMappings("["proxy-server-nameserver", "1.1.1.1"]"), del(boolean, 是否删除), createKey(boolean, 是否自动创建 dnsKey)
 function updateDNS(config, dnsMappings, del = false, createKey = false) {
     if (config.dns) {
         dnsMappings.forEach(([dnsKey, dnsValue]) => {
@@ -142,8 +142,8 @@ function updateDNS(config, dnsMappings, del = false, createKey = false) {
                         config.dns[dnsKey].unshift(dnsValue);
                     }
                 }
-            } else if (createKey) {
-                config.dns[dnsKey] = del ? [] : [dnsValue];
+            } else if (createKey && !del) {
+                config.dns[dnsKey] = [dnsValue];
             }
         });
     }
