@@ -506,6 +506,7 @@ function removeGroupsByRegex(config, regex) {
 // 传入参数：config, regex
 function removeProxiesByRegex(config, regex) {
     const removedProxyNames = [];
+
     config.proxies = config.proxies.filter(proxy => {
         if (regex.test(proxy.name)) {
             removedProxyNames.push(proxy.name);
@@ -513,8 +514,12 @@ function removeProxiesByRegex(config, regex) {
         }
         return true;
     });
+
     config["proxy-groups"].forEach(group => {
         group.proxies = group.proxies.filter(proxyName => !removedProxyNames.includes(proxyName));
+        if (group.proxies.length === 0) {
+            group.proxies.push("DIRECT");
+        }
     });
 }
 
