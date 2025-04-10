@@ -50,11 +50,11 @@ function main(config, profileName) {
     delRules(config,/OR\,/)
     delRules(config,/NOT\,/)
 
-    // 使用aes128SS
-    updateProxyOption(config, "name", /自建L/, "port", 8936)
-    updateProxyOption(config, "name", /自建L/, "cipher", "aes-128-gcm")
-    // 删除2022-blake3-aes-128-gcm节点
-    removeProxiesByProperty(config, "cipher", "2022-blake3-aes-128-gcm");
+    // // 使用aes128SS
+    // updateProxyOption(config, "name", /自建L/, "port", 8936)
+    // updateProxyOption(config, "name", /自建L/, "cipher", "aes-128-gcm")
+    // // 删除2022-blake3-aes-128-gcm节点
+    // removeProxiesByProperty(config, "cipher", "2022-blake3-aes-128-gcm");
     // 删除vless节点
     removeProxiesByProperty(config, "type", "vless");
 
