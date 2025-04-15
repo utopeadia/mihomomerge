@@ -103,7 +103,7 @@ function main(config, profileName) {
     // updateProxyOption(config, "type", ["vmess", "vless", "trojan", "ss", "ssr", "tuic"], "udp-over-tcp", true);
 
     // 添加节点到正则组
-    addProxiesToRegexGroup(config, /回家专用延迟优先/, "DIRECT", false, top);
+    addProxiesToRegexGroup(config, /回家专用延迟优先/, "DIRECT", false, "top");
     addProxiesToRegexGroup(config, /CQGAS/, "DIRECT");
     addProxiesToRegexGroup(config, /流媒体手选/, "DIRECT");
     addProxiesToRegexGroup(config, /强制禁止/, "PASS", true);
