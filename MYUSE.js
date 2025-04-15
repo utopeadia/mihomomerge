@@ -31,7 +31,7 @@ function main(config, profileName) {
     //     ["proxy-server-nameserver", "https://north.dh-global-team.net:438/dns-query#RULES&h3=true&skip-cert-verify=true"],
     //     ["fallback", "https://north.dh-global-team.net:438/dns-query#RULES&h3=true&skip-cert-verify=true"]
     // ]);
-    
+
     // 修改落地节点 IP 版本
     // updateProxyOptionByGroup(config, "name", /.*/, "ip-version", "ipv4-prefer");
 
@@ -80,7 +80,7 @@ function main(config, profileName) {
     // updateProxyOption(config, "type", ["vmess", "vless", "trojan", "ss", "ssr", "tuic"], "udp-over-tcp", true);
 
     // 添加节点到正则组
-    addProxiesToRegexGroup(config, /回家专用延迟优先/, "DIRECT");
+    addProxiesToRegexGroup(config, /回家专用延迟优先/, "DIRECT", false, top);
     addProxiesToRegexGroup(config, /CQGAS/, "DIRECT");
     addProxiesToRegexGroup(config, /流媒体手选/, "DIRECT");
 
@@ -89,10 +89,10 @@ function main(config, profileName) {
     addProxyAndGroup(config, DIRECTv4Pre, "after", "DIRECT");
 
     // 添加规则
-    addRules(config,"DOMAIN-SUFFIX,ai-assistant.upc.edu.cn,📚 学术直连", "unshift")
-    addRules(config,"DOMAIN-SUFFIX,webvpn.upc.edu.cn,🚄 本地直连", "unshift")
-    addRules(config,"DOMAIN-SUFFIX,sslvpn.upc.edu.cn,🚄 本地直连", "unshift")
-    addRules(config,"DOMAIN-SUFFIX,www.upc.edu.cn,🚄 本地直连", "unshift")
+    addRules(config, "DOMAIN-SUFFIX,ai-assistant.upc.edu.cn,📚 学术直连", "unshift")
+    addRules(config, "DOMAIN-SUFFIX,webvpn.upc.edu.cn,🚄 本地直连", "unshift")
+    addRules(config, "DOMAIN-SUFFIX,sslvpn.upc.edu.cn,🚄 本地直连", "unshift")
+    addRules(config, "DOMAIN-SUFFIX,www.upc.edu.cn,🚄 本地直连", "unshift")
 
     // 分组排序
     // sortRulesWithinGroups(config)
@@ -253,13 +253,15 @@ function updateProxyOptionByGroup(config, searchBy, targetGroups, optionName, op
 }
 
 // 指定节点到正则匹配节点组
-// 传入参数：config, regex, newProxies, del(boolean, 是否删除)
-function addProxiesToRegexGroup(config, regex, newProxies, del = false) {
+// 传入参数：config, regex, newProxies, del(boolean, 是否删除), position(添加节点时的位置,'top' 表示开头, 'end' 表示末尾。仅在 del 为 false 时生效)
+function addProxiesToRegexGroup(config, regex, newProxies, del = false, position = 'end') {
     const targetGroups = config["proxy-groups"].filter(group => regex.test(group.name));
+
+    if (!Array.isArray(newProxies)) {
+        newProxies = [newProxies];
+    }
+
     targetGroups.forEach(targetGroup => {
-        if (!Array.isArray(newProxies)) {
-            newProxies = [newProxies];
-        }
         newProxies.forEach(proxy => {
             if (del) {
                 const index = targetGroup.proxies.indexOf(proxy);
@@ -268,7 +270,11 @@ function addProxiesToRegexGroup(config, regex, newProxies, del = false) {
                 }
             } else {
                 if (!targetGroup.proxies.includes(proxy)) {
-                    targetGroup.proxies.push(proxy);
+                    if (position === 'top') {
+                        targetGroup.proxies.unshift(proxy);
+                    } else {
+                        targetGroup.proxies.push(proxy);
+                    }
                 }
             }
         });
