@@ -4,6 +4,7 @@ function main(config, profileName) {
     updateDNS(config, [
         ["direct-nameserver", "dhcp://eth0"],
         ["direct-nameserver", "dhcp://en0"],
+        ["direct-nameserver", "dhcp://wlan0"],
         ["direct-nameserver", "dhcp://system"]
     ], false, true);
 
