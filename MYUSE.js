@@ -89,6 +89,7 @@ function main(config, profileName) {
     addProxyAndGroup(config, DIRECTv4Pre, "after", "DIRECT");
 
     // 添加规则
+    addRules(config, "DOMAIN-SUFFIX,raw.githubusercontent.com,🚀 主要代理", "unshift")
     addRules(config, "DOMAIN-SUFFIX,ai-assistant.upc.edu.cn,📚 学术直连", "unshift")
     addRules(config, "DOMAIN-SUFFIX,webvpn.upc.edu.cn,🚄 本地直连", "unshift")
     addRules(config, "DOMAIN-SUFFIX,sslvpn.upc.edu.cn,🚄 本地直连", "unshift")
