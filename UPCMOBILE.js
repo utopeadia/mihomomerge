@@ -82,11 +82,15 @@ function main(config, profileName) {
     addProxyAndGroup(config, DIRECTv4Pre, "after", "DIRECT");
 
     // 添加规则
-    addRules(config, "DOMAIN-SUFFIX,raw.githubusercontent.com,🚀 主要代理", "unshift")
     addRules(config, "DOMAIN-SUFFIX,ai-assistant.upc.edu.cn,📚 学术直连", "unshift")
-    addRules(config,"DOMAIN-SUFFIX,webvpn.upc.edu.cn,🚄 本地直连", "unshift")
-    addRules(config,"DOMAIN-SUFFIX,sslvpn.upc.edu.cn,🚄 本地直连", "unshift")
-    addRules(config,"DOMAIN-SUFFIX,www.upc.edu.cn,🚄 本地直连", "unshift")
+    addRules(config, "DOMAIN-SUFFIX,lan.upc.edu.cn,🚄 本地直连", "unshift")
+    addRules(config, "DOMAIN-SUFFIX,wlan.upc.edu.cn,🚄 本地直连", "unshift")
+    addRules(config, "DOMAIN-SUFFIX,v.upc.edu.cn,🚄 本地直连", "unshift")
+    addRules(config, "IP-CIDR,121.251.251.0/24,no-resolve,🚄 本地直连", "unshift")
+    addRules(config, "DOMAIN-SUFFIX,webvpn.upc.edu.cn,🚄 本地直连", "unshift")
+    addRules(config, "DOMAIN-SUFFIX,sslvpn.upc.edu.cn,🚄 本地直连", "unshift")
+    addRules(config, "DOMAIN-SUFFIX,www.upc.edu.cn,🚄 本地直连", "unshift")
+    addRules(config, "DOMAIN-SUFFIX,raw.githubusercontent.com,🚀 主要代理", "unshift")
 
     // 分组排序
     // sortRulesWithinGroups(config)
