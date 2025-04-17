@@ -89,7 +89,7 @@ function main(config, profileName) {
     addRules(config, "DOMAIN-SUFFIX,lan.upc.edu.cn,🚄 本地直连", "unshift")
     addRules(config, "DOMAIN-SUFFIX,wlan.upc.edu.cn,🚄 本地直连", "unshift")
     addRules(config, "DOMAIN-SUFFIX,v.upc.edu.cn,🚄 本地直连", "unshift")
-    addRules(config, "IP-CIDR,121.251.251.0/24,no-resolve,🚄 本地直连", "unshift")
+    addRules(config, "IP-CIDR,121.251.251.0/24,🚄 本地直连,no-resolve", "unshift")
     addRules(config, "DOMAIN-SUFFIX,webvpn.upc.edu.cn,🚄 本地直连", "unshift")
     addRules(config, "DOMAIN-SUFFIX,sslvpn.upc.edu.cn,🚄 本地直连", "unshift")
     addRules(config, "DOMAIN-SUFFIX,www.upc.edu.cn,🚄 本地直连", "unshift")
