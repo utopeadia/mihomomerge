@@ -74,6 +74,7 @@ function main(config, profileName) {
 
     // 添加节点到正则组
     addProxiesToRegexGroup(config, /回家专用延迟优先/, "DIRECT", false, "top");
+    addProxiesToRegexGroup(config, /回家专用故障转移/, "DIRECT", false, "top");
     addProxiesToRegexGroup(config, /CQGAS/, "DIRECT");
     addProxiesToRegexGroup(config, /流媒体手选/, "DIRECT");
 
