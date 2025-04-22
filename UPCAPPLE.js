@@ -153,8 +153,8 @@ function main(config, profileName) {
     addRules(config, "IP-CIDR6,2620:119:53::123/128,🍀 香港应用,no-resolve", "unshift")
     addRules(config, "IP-CIDR6,2620:0:ccc::2/128,🍀 香港应用,no-resolve", "unshift")
     addRules(config, "IP-CIDR6,2620:0:ccd::2/128,🍀 香港应用,no-resolve", "unshift")
-    addRules(config, "DOMAIN,dns.alidns.com,🚄 本地直连", "unshift")
-    addRules(config, "DOMAIN,doh.pub,🚄 本地直连", "unshift")
+    addRules(config, "DOMAIN-SUFFIX,dns.alidns.com,🚄 本地直连", "unshift")
+    addRules(config, "DOMAIN-SUFFIX,doh.pub,🚄 本地直连", "unshift")
     addRules(config, "DOMAIN-SUFFIX,dh-global-team.net,🚄 本地直连", "unshift")
     addRules(config, "DOMAIN-SUFFIX,dh-dns.global-idt.net,🚄 本地直连", "unshift")
     addRules(config, "IP-CIDR,162.14.132.109/32,🚄 本地直连,no-resolve", "unshift")
@@ -167,6 +167,7 @@ function main(config, profileName) {
     addRules(config, "IP-CIDR,114.114.114.114/32,🚄 本地直连,no-resolve", "unshift")
     addRules(config, "IP-CIDR6,2400:da00::6666/128,🚄 本地直连,no-resolve", "unshift")
     addRules(config, "IP-CIDR6,240c::6666/128,🚄 本地直连,no-resolve", "unshift")
+    addRules(config, "DOMAIN,testingcf.jsdelivr.net,🚄 本地直连", "unshift")
 
     // 删除vless节点
     removeProxiesByProperty(config, "type", "vless");
