@@ -91,7 +91,7 @@ function main(config, profileName) {
     addRules(config, "DOMAIN-SUFFIX,webvpn.upc.edu.cn,🚄 本地直连", "unshift")
     addRules(config, "DOMAIN-SUFFIX,sslvpn.upc.edu.cn,🚄 本地直连", "unshift")
     addRules(config, "DOMAIN-SUFFIX,www.upc.edu.cn,🚄 本地直连", "unshift")
-    addRules(config, "DOMAIN-SUFFIX,raw.githubusercontent.com,🚀 主要代理", "unshift")
+    addRules(config, "DOMAIN-SUFFIX,githubusercontent.com,🗽 美国应用", "unshift")
     addRules(config, "DOMAIN,testingcf.jsdelivr.net,🚀 主要代理", "unshift")
     addRules(config, "DOMAIN,www.msftconnecttest.com,🚄 本地直连", "unshift")
     addRules(config, "DOMAIN,dns.msftncsi.com,🚄 本地直连", "unshift")
