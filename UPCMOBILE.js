@@ -1,12 +1,12 @@
 function main(config, profileName) {
 
     // 添加DCHP direct-nameserver
-    updateDNS(config, [
-        ["direct-nameserver", "dhcp://eth0"],
-        ["direct-nameserver", "dhcp://en0"],
-        ["direct-nameserver", "dhcp://wlan0"],
-        ["direct-nameserver", "dhcp://system"]
-    ], false, true);
+    // updateDNS(config, [
+    //     ["direct-nameserver", "dhcp://eth0"],
+    //     ["direct-nameserver", "dhcp://en0"],
+    //     ["direct-nameserver", "dhcp://wlan0"],
+    //     ["direct-nameserver", "dhcp://system"]
+    // ], false, true);
     
     // 添加UPCDNS
     updateDNS(config, [
