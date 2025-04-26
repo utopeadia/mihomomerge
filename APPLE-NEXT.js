@@ -13,12 +13,12 @@ function main(config, profileName) {
         ["direct-nameserver", "dhcp://system"]
     ], false, true);
 
-    // 添加UPCDNS
-    updateDNS(config, [
-        ["proxy-server-nameserver", "121.251.251.251"],
-        ["default-nameserver", "121.251.251.251"],
-        ["nameserver", "121.251.251.251"]
-    ]);
+    // // 添加UPCDNS
+    // updateDNS(config, [
+    //     ["proxy-server-nameserver", "121.251.251.251"],
+    //     ["default-nameserver", "121.251.251.251"],
+    //     ["nameserver", "121.251.251.251"]
+    // ]);
 
     // 移除system规则
     updateDNS(config, [
