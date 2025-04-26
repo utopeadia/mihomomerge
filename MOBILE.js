@@ -1,5 +1,10 @@
 function main(config, profileName) {
 
+    // 添加UPC认证DNS
+    modifyConfigByPath(config, "dns.nameserver-policy", null, null, 'wlan.upc.edu.cn', ['121.251.251.251#DIRECT', '121.251.251.250#DIRECT']);
+    modifyConfigByPath(config, "dns.nameserver-policy", null, null, 'lan.upc.edu.cn', ['121.251.251.251#DIRECT', '121.251.251.250#DIRECT']);
+    modifyConfigByPath(config, "dns.nameserver-policy", null, null, 'v.upc.edu.cn', ['121.251.251.251#DIRECT', '121.251.251.250#DIRECT']);
+
     // 添加DCHP direct-nameserver
     // updateDNS(config, [
     //     ["direct-nameserver", "dhcp://eth0"],
