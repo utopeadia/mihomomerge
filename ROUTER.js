@@ -30,7 +30,10 @@ function main(config, profileName) {
     //     ["fallback", "https://north.dh-global-team.net:438/dns-query#RULES&h3=true&skip-cert-verify=true"]
     // ]);
     
-   // 修改落地节点 IP 版本
+    // 强制嗅探访问
+    modifyConfigByPath(config, "sniffer", null, null, "override-destination", true);
+    
+    // 修改落地节点 IP 版本
     // updateProxyOptionByGroup(config, "name", /.*/, "ip-version", "ipv4-prefer");
 
     // 关闭自建落地TCP快速打开
