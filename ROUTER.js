@@ -5,12 +5,12 @@ function main(config, profileName) {
     modifyConfigByPath(config, "dns.nameserver-policy", null, null, 'lan.upc.edu.cn', ['121.251.251.251#DIRECT', '121.251.251.250#DIRECT']);
     modifyConfigByPath(config, "dns.nameserver-policy", null, null, 'v.upc.edu.cn', ['121.251.251.251#DIRECT', '121.251.251.250#DIRECT']);
     
-    // // 添加UPCDNS
-    // updateDNS(config, [
-    //     ["proxy-server-nameserver", "121.251.251.251"],
-    //     ["default-nameserver", "121.251.251.251"],
-    //     ["nameserver", "121.251.251.251"]
-    // ]);
+    // 添加 direct-nameserver
+    updateDNS(config, [
+        ["direct-nameserver", "180.184.1.1"],
+        ["direct-nameserver", "119.29.29.29"],
+        ["direct-nameserver", "223.5.5.5"]
+    ], false, true);
 
     // 移除system规则
     updateDNS(config, [
