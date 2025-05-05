@@ -32,6 +32,9 @@ function main(config, profileName) {
 
     // 移除自转发
     removeProxiesByRegex(config, /自转发/);
+
+    // 强制嗅探访问
+    modifyConfigByPath(config, "sniffer", null, null, "override-destination", true);
     
     // 修改落地节点 IP 版本
     // updateProxyOptionByGroup(config, "name", /.*/, "ip-version", "ipv4-prefer");
