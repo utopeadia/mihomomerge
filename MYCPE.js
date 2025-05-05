@@ -7,8 +7,9 @@ function main(config, profileName) {
     
     // 添加DCHP direct-nameserver
     updateDNS(config, [
-        ["direct-nameserver", "dhcp://wwan0"],
-        ["direct-nameserver", "dhcp://wwan0_1"]
+        ["direct-nameserver", "180.184.1.1"],
+        ["direct-nameserver", "119.29.29.29"],
+        ["direct-nameserver", "223.5.5.5"]
     ], false, true);
 
     // // 添加UPCDNS
