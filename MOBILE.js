@@ -13,12 +13,18 @@ function main(config, profileName) {
     //     ["direct-nameserver", "dhcp://system"]
     // ], false, true);
     
-    // 添加UPCDNS
-    // updateDNS(config, [
-    //     ["proxy-server-nameserver", "121.251.251.251"],
-    //     ["default-nameserver", "121.251.251.251"],
-    //     ["nameserver", "121.251.251.251"]
-    // ]);
+    // 移除通用DNS并添加DHCPDNS
+    updateDNS(config, [
+        ["nameserver", "180.184.1.1"],
+        ["nameserver", "119.29.29.29"],
+        ["nameserver", "223.5.5.5"]
+    ], true);
+    updateDNS(config, [
+        ["nameserver", "dhcp://eth0"],
+        ["nameserver", "dhcp://en0"],
+        ["nameserver", "dhcp://wlan0"],
+        ["nameserver", "dhcp://system"]
+    ]);
 
     // // 移除system规则
     // updateDNS(config, [
