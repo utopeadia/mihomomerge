@@ -120,6 +120,7 @@ function main(config, profileName) {
 
     // 添加规则
     addRules(config, "DOMAIN-SUFFIX,ai-assistant.upc.edu.cn,📚 学术直连", "unshift")
+    addRules(config, "DOMAIN-SUFFIX,xsdk.upc.edu.cn,📚 学术直连", "unshift")
     addRules(config, "DOMAIN-SUFFIX,lan.upc.edu.cn,🚄 本地直连", "unshift")
     addRules(config, "DOMAIN-SUFFIX,wlan.upc.edu.cn,🚄 本地直连", "unshift")
     addRules(config, "DOMAIN-SUFFIX,v.upc.edu.cn,🚄 本地直连", "unshift")
