@@ -10,7 +10,7 @@ function main(config, profileName) {
     //     ["direct-nameserver", "dhcp://eth0"],
     //     ["direct-nameserver", "dhcp://en0"],
     //     ["direct-nameserver", "dhcp://wlan0"],
-    //     ["direct-nameserver", "dhcp://system"]
+    //     ["direct-nameserver", "system"]
     // ], false, true);
 
     // 移除通用DNS并添加DHCPDNS
@@ -23,15 +23,8 @@ function main(config, profileName) {
         ["nameserver", "dhcp://eth0"],
         ["nameserver", "dhcp://en0"],
         ["nameserver", "dhcp://wlan0"],
-        ["nameserver", "dhcp://system"]
-    ]);
-   
-    // 移除system规则
-    updateDNS(config, [
-        ["proxy-server-nameserver", "system"],
-        ["default-nameserver", "system"],
         ["nameserver", "system"]
-    ], true);
+    ]);
 
     // // 添加DH-DNS上海
     // updateDNS(config, [
