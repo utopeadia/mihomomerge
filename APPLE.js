@@ -21,9 +21,10 @@ function main(config, profileName) {
     ], true);
     updateDNS(config, [
         ["nameserver", "dhcp://eth0"],
-        ["nameserver", "dhcp://en0"],
         ["nameserver", "dhcp://wlan0"],
-        ["nameserver", "system"]
+        ["nameserver", "system"],
+        ["nameserver", "system://"],
+        ["nameserver", "dhcp://en0"]
     ]);
 
     // // 添加DH-DNS上海
