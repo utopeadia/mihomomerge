@@ -13,19 +13,19 @@ function main(config, profileName) {
     //     ["direct-nameserver", "system"]
     // ], false, true);
     
-    // 移除通用DNS并添加DHCPDNS
-    updateDNS(config, [
-        ["nameserver", "180.184.1.1"],
-        ["nameserver", "119.29.29.29"],
-        ["nameserver", "223.5.5.5"]
-    ], true);
-    updateDNS(config, [
-        ["nameserver", "dhcp://eth0"],
-        ["nameserver", "dhcp://wlan0"],
-        ["nameserver", "system"],
-        ["nameserver", "system://"],
-        ["nameserver", "dhcp://en0"]
-    ]);
+    // // 移除通用DNS并添加DHCPDNS
+    // updateDNS(config, [
+    //     ["nameserver", "180.184.1.1"],
+    //     ["nameserver", "119.29.29.29"],
+    //     ["nameserver", "223.5.5.5"]
+    // ], true);
+    // updateDNS(config, [
+    //     ["nameserver", "dhcp://eth0"],
+    //     ["nameserver", "dhcp://wlan0"],
+    //     ["nameserver", "system"],
+    //     ["nameserver", "system://"],
+    //     ["nameserver", "dhcp://en0"]
+    // ]);
 
     // // 移除system规则
     // updateDNS(config, [
