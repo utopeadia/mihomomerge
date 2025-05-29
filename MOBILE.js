@@ -17,7 +17,8 @@ function main(config, profileName) {
     // updateDNS(config, [
     //     ["nameserver", "180.184.1.1"],
     //     ["nameserver", "119.29.29.29"],
-    //     ["nameserver", "223.5.5.5"]
+    //     ["nameserver", "223.6.6.6"],
+    //     ["nameserver", "123.125.81.6"]
     // ], true);
     // updateDNS(config, [
     //     ["nameserver", "dhcp://eth0"],
@@ -173,6 +174,7 @@ function main(config, profileName) {
     addRules(config, "IP-CIDR,114.114.115.119/32,🚄 本地直连,no-resolve", "unshift")
     addRules(config, "IP-CIDR,114.114.114.110/32,🚄 本地直连,no-resolve", "unshift")
     addRules(config, "IP-CIDR,114.114.115.110/32,🚄 本地直连,no-resolve", "unshift")
+    addRules(config, "IP-CIDR,123.125.81.6/32,🚄 本地直连,no-resolve", "unshift")
     addRules(config, "IP-CIDR,1.12.12.12/32,🚄 本地直连,no-resolve", "unshift")
     addRules(config, "IP-CIDR,120.53.53.53/32,🚄 本地直连,no-resolve", "unshift")
     addRules(config, "IP-CIDR,117.50.10.10/32,🚄 本地直连,no-resolve", "unshift")
