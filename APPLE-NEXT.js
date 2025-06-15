@@ -114,7 +114,7 @@ function main(config, profileName) {
     addProxiesToRegexGroup(config, /回家专用故障转移/, "DIRECT", false, "top");
     addProxiesToRegexGroup(config, /CQGAS/, "DIRECT");
     addProxiesToRegexGroup(config, /流媒体手选/, "DIRECT");
-    addProxiesToRegexGroup(config, /强制禁止/, "PASS", true);
+    addProxiesToRegexGroup(config, /禁止访问/, "PASS", true);
 
     // 添加新节点
     const DIRECTv4Pre = { "name": "DIRECT-V4PRE", "type": "direct", "udp": true, "ip-version": "ipv4-prefer" };
