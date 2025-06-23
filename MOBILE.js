@@ -746,6 +746,41 @@ function modifyConfigByPath(config, path, searchKey, searchValue, modifyKey, mod
     return config;
 }
 
+/**
+ * 在匹配的代理组内对代理节点进行排序。
+ *
+ * @param {object} config - 代理配置对象。
+ * @param {RegExp} groupRegex - 用于匹配目标代理组名称的正则表达式。
+ * @param {RegExp[]} proxiesOrderRegex - 一个正则表达式数组，定义了节点的排序优先级。
+ * @example
+ * // 将名称包含 "故障转移" 的组中的节点排序，香港节点在前，美国节点其次。
+ * sortProxiesInGroup(config, /故障转移/, [/香港/, /美国/]);
+ */
+function sortProxiesInGroup(config, groupRegex, proxiesOrderRegex) {
+    // 查找匹配的代理组
+    const targetGroups = config["proxy-groups"].filter(group => groupRegex.test(group.name));
+    targetGroups.forEach(group => {
+        const originalProxies = group.proxies;
+        let sortedProxies = [];
+        const remainingProxies = new Set(originalProxies);
+        proxiesOrderRegex.forEach(orderRegex => {
+            const matched = [];
+            originalProxies.forEach(proxyName => {
+                if (orderRegex.test(proxyName) && remainingProxies.has(proxyName)) {
+                    matched.push(proxyName);
+                    remainingProxies.delete(proxyName);
+                }
+            });
+            sortedProxies = sortedProxies.concat(matched);
+        });
+        const unmatchedProxies = originalProxies.filter(proxyName => remainingProxies.has(proxyName));
+        sortedProxies = sortedProxies.concat(unmatchedProxies);
+        group.proxies = sortedProxies;
+    });
+
+    return config;
+}
+
 // 移除所有为Null的对象
 function removeNullValues(config) {
     for (const key in config) {
